@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * Classe utilitaire d'import des fichiers
+ * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
+ */
 public class ImportUtils {
     public static InstanceSpecifications vehicleParse(String path){
         InstanceSpecifications instanceSpecifications = null;

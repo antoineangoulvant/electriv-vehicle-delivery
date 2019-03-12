@@ -4,21 +4,25 @@ import fr.uga.project.electricvehicledelivery.utils.ImportUtils;
 
 import java.util.ArrayList;
 
+/**
+ * Classe représentant les données des points de livraison
+ * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
+ */
 public class Spots {
-    private ArrayList<ArrayList<Float>> _coords;
-    private ArrayList<ArrayList<Float>> _distances;
-    private ArrayList<ArrayList<Integer>> _times;
-    private ArrayList<Integer> _demands;
+    private ArrayList<ArrayList<Float>> coords;
+    private ArrayList<ArrayList<Float>> distances;
+    private ArrayList<ArrayList<Integer>> times;
+    private ArrayList<Integer> demands;
 
     public Spots(String assetName) {
         importSpots(assetName);
     }
 
     private void importSpots(String assetPath) {
-        this._coords = importCoords(assetPath);
-        this._distances = importDistances(assetPath);
-        this._times = importTimes(assetPath);
-        this._demands = importDemands(assetPath);
+        this.coords = importCoords(assetPath);
+        this.distances = importDistances(assetPath);
+        this.times = importTimes(assetPath);
+        this.demands = importDemands(assetPath);
     }
 
     private ArrayList<ArrayList<Integer>> importTimes(String assetPath) {
@@ -37,26 +41,26 @@ public class Spots {
         return ImportUtils.demandsParse(assetPath);
     }
 
-    public ArrayList<ArrayList<Float>> get_coords() {
-        return _coords;
+    public ArrayList<ArrayList<Float>> getCoords() {
+        return coords;
     }
 
-    public ArrayList<ArrayList<Float>> get_distances() {
-        return _distances;
+    public ArrayList<ArrayList<Float>> getDistances() {
+        return distances;
     }
 
-    public ArrayList<ArrayList<Integer>> get_times() {
-        return _times;
+    public ArrayList<ArrayList<Integer>> getTimes() {
+        return times;
+    }
+
+    public ArrayList<Integer> getDemands() {
+        return demands;
     }
 
     public String toString() {
-        return "Coords : \n------------------\n" + get_coords().toString()+
-                "\nDistances : \n------------------\n" + get_distances().toString() +
-                "\nTimes : \n------------------\n" + get_times().toString() +
-                "\nDemands : \n------------------\n"+get_demands().toString();
-    }
-
-    public ArrayList<Integer> get_demands() {
-        return _demands;
+        return "Coords : \n------------------\n" + getCoords().toString()+
+                "\nDistances : \n------------------\n" + getDistances().toString() +
+                "\nTimes : \n------------------\n" + getTimes().toString() +
+                "\nDemands : \n------------------\n"+ getDemands().toString();
     }
 }

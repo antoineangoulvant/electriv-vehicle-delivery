@@ -6,10 +6,14 @@ import fr.uga.project.electricvehicledelivery.heuristics.FirstHeuristics;
 import fr.uga.project.electricvehicledelivery.utils.Constants;
 import fr.uga.project.electricvehicledelivery.utils.ImportUtils;
 
+/**
+ * Classe centrale de l'application
+ * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
+ */
 public class Controller {
     private Controller() {
         InstanceSpecifications instanceSpecifications = ImportUtils.vehicleParse(Constants.ASSET_LYON1+"/vehicle.ini");
-        System.out.println(instanceSpecifications);
+        //System.out.println(instanceSpecifications);
         Spots spots = new Spots(Constants.ASSET_LYON1);
         new FirstHeuristics(instanceSpecifications, spots);
     }

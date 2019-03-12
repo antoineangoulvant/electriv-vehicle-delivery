@@ -2,6 +2,10 @@ package fr.uga.project.electricvehicledelivery.domain;
 
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe modélisant les caractéristiques d'une instance
+ * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
+ */
 @NoArgsConstructor
 public class InstanceSpecifications {
     private int maxDist;

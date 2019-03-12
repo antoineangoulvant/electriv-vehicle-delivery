@@ -1,5 +1,9 @@
 package fr.uga.project.electricvehicledelivery.utils;
 
+/**
+ * Classe contenant toutes les constantes utiles dans l'application
+ * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
+ */
 public class Constants {
     public static String ASSET_LYON0 = "src/main/resources/instances/lyon0";
     public static String ASSET_LYON1 = "src/main/resources/instances/lyon1";

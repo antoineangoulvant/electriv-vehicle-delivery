@@ -4,12 +4,16 @@ import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
 import lombok.NonNull;
 
+/**
+ * Première heuristique
+ * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
+ */
 public class FirstHeuristics {
     public FirstHeuristics(@NonNull InstanceSpecifications instanceSpecifications, @NonNull Spots spots){
         int demandsSum = 0;
-        for(int i = 0; i < spots.get_demands().size(); i++){
+        for(int i = 0; i < spots.getDemands().size(); i++){
             if(demandsSum < instanceSpecifications.getCapacity()){
-                demandsSum += spots.get_demands().get(i);
+                demandsSum += spots.getDemands().get(i);
             }
         }
 
