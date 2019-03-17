@@ -1,11 +1,15 @@
 package fr.uga.project.electricvehicledelivery.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * Classe modélisant les caractéristiques d'une instance
  * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
  */
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class InstanceSpecifications {
     private int maxDist;
@@ -15,20 +19,6 @@ public class InstanceSpecifications {
     private int chargeSlow;
     private String startTime;
     private String endTime;
-
-    public InstanceSpecifications(int maxDist, int capacity, int chargeFast, int chargeMedium, int chargeSlow, String startTime, String endTime) {
-        this.maxDist = maxDist;
-        this.capacity = capacity;
-        this.chargeFast = chargeFast;
-        this.chargeMedium = chargeMedium;
-        this.chargeSlow = chargeSlow;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
 
     public String toString(){
         return "\n\tCaractéristiques de l'instance \n\n" +

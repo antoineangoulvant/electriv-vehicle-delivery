@@ -1,6 +1,6 @@
 package fr.uga.project.electricvehicledelivery.heuristics;
 
-public class FirstHeuristics implements IHeuristics{
+public interface IHeuristics {
 
 
 
