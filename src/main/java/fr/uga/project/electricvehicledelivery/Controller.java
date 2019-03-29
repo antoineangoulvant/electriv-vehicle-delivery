@@ -13,10 +13,21 @@ import fr.uga.project.electricvehicledelivery.utils.ImportUtils;
  */
 public class Controller {
     private Controller() {
-        InstanceSpecifications instanceSpecifications = ImportUtils.vehicleParse(Constants.ASSET_LYON1+"/vehicle.ini");
-        //System.out.println(instanceSpecifications);
-        Spots spots = new Spots(Constants.ASSET_LYON1);
-        new PowerHeuristic(instanceSpecifications, spots);
+        InstanceSpecifications instanceSpecifications = ImportUtils.vehicleParse(Constants.ASSET_LYON0+"/vehicle.ini");
+        System.out.println(instanceSpecifications);
+
+        Spots spot = new Spots(Constants.ASSET_LYON0);
+
+
+        /** SORTING TESTING**/
+        /**
+         SortUtil util = new SortUtil();
+         ArrayList<SpotLink<Float>> toto = util.sortMatrix(spot.get_distances());
+         ArrayList<SpotLink<Integer>> tata = util.sortMatrix(spot.get_times());
+         **/
+
+        PowerHeuristic power = new PowerHeuristic(instanceSpecifications, spot);
+        power.run();
     }
 
     public static void main(String[] args){
