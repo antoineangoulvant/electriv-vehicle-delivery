@@ -1,8 +1,11 @@
 package fr.uga.project.electricvehicledelivery.utils;
 
+import com.sun.deploy.util.ArrayUtil;
 import fr.uga.project.electricvehicledelivery.domain.SpotLink;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -70,65 +73,94 @@ public class SortUtil implements Comparator<Number>{
         return sorted;
     }
 
-    public static <T> List<SpotLink<T>> getAllSpotLinksWithCustomer1(ArrayList<SpotLink<T>> spotLinks, int customer1){
-        return spotLinks.stream()
-                .filter((sl) -> sl.customer1 == customer1)
-                .collect(Collectors.toList());
-    }
+    public List<Integer> neighbor_sortMatrix(Float[][] matrix) {
+        //matrix = removeDiagonalFromMatrix(matrix);
+        matrix = removeWareHouse(matrix);
+        int mainIndex=0, floatingIndex=0;
+        float pretendValue;
+        List<Integer> optimisedList = buildDefaultList(matrix);
+        float optimisedValue = getOptimisedValue(matrix, optimisedList);
+        do {
+            if (mainIndex==floatingIndex){
+                floatingIndex++;
+                if (floatingIndex >= optimisedList.size()){
+                    break;
+                }else{
+                    continue;
+                }
 
+            }
+            // swap
+            swap(mainIndex, floatingIndex, optimisedList);
 
-
-
-        public static ArrayList<SpotLink<Integer>> sortTimes(Integer[][] times){
-        int totalNumberOfTimes = times.length * times[0].length;
-        int toto = 0;
-        for (int i = 0; i < 11; i++){
-            toto = toto + times[i].length;
-        }
-        ArrayList<SpotLink<Integer>> timesSorted = new ArrayList<>();
-
-        int sourceIndexLine = 0;
-        int sourceIndexCol = 0;
-        while (timesSorted.size() < totalNumberOfTimes){
-            // find the smallest number
-            int copyIndexLine = sourceIndexLine;
-            int copyIndexCol = sourceIndexCol;
-
-            for (int line = 0; line < times.length; line++){
-                for (int col = 0; col < times[line].length; col++){
-                    if ((times[line][col] != null)&& (times[copyIndexLine][copyIndexCol] != null) && (times[copyIndexLine][copyIndexCol] > times[line][col])){
-                        copyIndexLine = line;
-                        copyIndexCol = col;
-                    }
+            // compute optimised value
+            pretendValue = getOptimisedValue(matrix, optimisedList);
+            System.out.println("Array : "+optimisedList.toString()+"\nPretendValue : "+pretendValue+"\n OptimisedValue : "+optimisedValue+"\nmainIndex : "+mainIndex+"\nfloatingIndex : "+floatingIndex+"\n");
+            if (pretendValue < optimisedValue){
+                optimisedValue = pretendValue;
+                // reset values
+                mainIndex = 0;
+                floatingIndex = 1;
+                System.out.println(">> OptimisedValue = "+optimisedValue+", resetting mainIndex and floatingIndex\n");
+            }else{
+                swap(floatingIndex, mainIndex, optimisedList);
+                if (floatingIndex == optimisedList.size()-1){
+                    mainIndex++;
+                    floatingIndex = 0;
+                }else{
+                    floatingIndex++;
                 }
             }
-            if (times[copyIndexLine][copyIndexCol] != null){
-                timesSorted.add(new SpotLink<>(copyIndexLine, copyIndexCol, times[copyIndexLine][copyIndexCol]));
-                System.out.println("Adding "+times[copyIndexLine][copyIndexCol]+ " to couple <"+copyIndexLine+","+copyIndexCol+">");
-                //totalNumberOfTimes--;
-                times[copyIndexLine][copyIndexCol] = null;
-                System.out.println(timesSorted.size());
-            }
+        }while (mainIndex < optimisedList.size());
 
-            //System.out.println("IM A "+copyIndexLine+" AND "+copyIndexCol);
+        return optimisedList;
 
-            if (((sourceIndexCol+1) % (times[0].length)) ==0){
-                sourceIndexCol = 0;
-                sourceIndexLine++;
-            }else{
-                sourceIndexCol++;
-            }
-            if (((sourceIndexLine+1) % (times.length +1)) ==0){
-                sourceIndexLine = 0;
-                sourceIndexCol = 0;
-            }else{
+    }
 
+    private Float[][] removeWareHouse(Float[][] matrix) {
+        //List<Float> tmp = ArrayUtil.
+        return null;
+    }
+
+    private void swap(int i, int y, List<Integer> optimisedList) {
+        int tmp;
+        tmp = optimisedList.get(i);
+        optimisedList.set(i, optimisedList.get(y));
+        optimisedList.set(y, tmp);
+    }
+
+    private Float[][] removeDiagonalFromMatrix(Float[][] matrix) {
+        int i =1, y;
+        for (; i < matrix.length; i++){
+            y =0;
+            while (y < i){
+                matrix[i][y] = 0f;
+                y++;
             }
 
         }
+        return matrix;
+    }
 
-        return timesSorted;
+    private float getOptimisedValue(Float[][] matrix, List<Integer> optimisedList) {
+        float total = 0;
+        for (int i = 0; i+1 < optimisedList.size(); i++){
+            if (matrix[optimisedList.get(i)][optimisedList.get(i+1)] == 0){
+                continue;
+            }
+            total += matrix[optimisedList.get(i)][optimisedList.get(i+1)];
+        }
+        return total;
+    }
 
+    private List<Integer> buildDefaultList(Float[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        // Adding the warehouse at the beginning
+        //res.add(matrix.length-1);
+        for (int i = 0; i < matrix.length; i++){
+            res.add(i);
+        }
+        return res;
     }
 
 }
