@@ -18,10 +18,7 @@ public class SortUtil implements Comparator<Number>{
     // Inspired by selection sort
     public <T> ArrayList<SpotLink<T>> sortMatrix(T[][] matrix){
         int totalNumberOfValues = matrix.length * matrix[0].length;
-        int toto = 0;
-        for (int i = 0; i < 11; i++){
-            toto = toto + matrix[i].length;
-        }
+
         ArrayList<SpotLink<T>> sorted = new ArrayList<>();
 
         int sourceIndexLine = 0;
@@ -59,13 +56,11 @@ public class SortUtil implements Comparator<Number>{
             if (((sourceIndexLine+1) % (matrix.length +1)) ==0){
                 sourceIndexLine = 0;
                 sourceIndexCol = 0;
-            }else{
-
             }
 
         }
 
-        // Remove the matrix diag
+        // Remove the matrix diagonal
         List<SpotLink> toRemove = sorted.stream()
                 .filter((tSpotLink) -> tSpotLink.customer1 == tSpotLink.customer2)
                 .collect(Collectors.toList());

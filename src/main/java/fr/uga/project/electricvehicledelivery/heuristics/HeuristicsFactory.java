@@ -11,6 +11,8 @@ public class HeuristicsFactory {
                 return new FirstHeuristics();
             case PowerHeuristics:
                 return new PowerHeuristic(instance, spot);
+            case NeighborHeuristics:
+                return new NeighborHeuristic(instance, spot);
         }
         return null;
     }

@@ -2,8 +2,7 @@ package fr.uga.project.electricvehicledelivery;
 
 import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
-import fr.uga.project.electricvehicledelivery.heuristics.FirstHeuristics;
-import fr.uga.project.electricvehicledelivery.heuristics.PowerHeuristic;
+import fr.uga.project.electricvehicledelivery.heuristics.*;
 import fr.uga.project.electricvehicledelivery.utils.Constants;
 import fr.uga.project.electricvehicledelivery.utils.ImportUtils;
 
@@ -26,8 +25,11 @@ public class Controller {
          ArrayList<SpotLink<Integer>> tata = util.sortMatrix(spot.get_times());
          **/
 
-        PowerHeuristic power = new PowerHeuristic(instanceSpecifications, spot);
-        power.run();
+        //IHeuristics power = HeuristicsFactory.getHeuristic(HeuristicsEnum.PowerHeuristics, instanceSpecifications, spot);
+        //power.run();
+
+        IHeuristics neighbor = HeuristicsFactory.getHeuristic(HeuristicsEnum.NeighborHeuristics, instanceSpecifications, spot);
+        neighbor.run();
     }
 
     public static void main(String[] args){
