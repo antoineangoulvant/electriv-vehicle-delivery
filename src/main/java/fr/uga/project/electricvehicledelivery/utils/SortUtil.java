@@ -6,10 +6,7 @@ import fr.uga.project.electricvehicledelivery.domain.SpotLink;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.nio.channels.FileLock;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SortUtil implements Comparator<Number>{
@@ -117,9 +114,14 @@ public class SortUtil implements Comparator<Number>{
 
     }
 
-    private Float[][] removeWareHouse(Float[][] matrix) {
-        //List<Float> tmp = ArrayUtil.
-        return null;
+    private <T> Float[][] removeWareHouse(T[][] matrix) {
+        Float[][] tmp = new Float[matrix.length-1][matrix[0].length-1];
+        for (int i = 0; i <= matrix.length-2; i++){
+            for (int y = 0; y <= matrix.length-2; y++){
+                tmp[i][y] = (Float) matrix[i][y];
+            }
+        }
+        return tmp;
     }
 
     private void swap(int i, int y, List<Integer> optimisedList) {
