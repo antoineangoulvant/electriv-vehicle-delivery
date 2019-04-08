@@ -12,10 +12,10 @@ import fr.uga.project.electricvehicledelivery.utils.ImportUtils;
  */
 public class Controller {
     private Controller() {
-        InstanceSpecifications instanceSpecifications = ImportUtils.vehicleParse(Constants.ASSET_LYON0+"/vehicle.ini");
+        InstanceSpecifications instanceSpecifications = ImportUtils.vehicleParse(Constants.Assets.ASSET_LYON0.getInstance()+"/vehicle.ini");
         System.out.println(instanceSpecifications);
 
-        Spots spot = new Spots(Constants.ASSET_LYON0);
+        Spots spot = new Spots(Constants.Assets.ASSET_LYON0.getInstance());
 
 
         /** SORTING TESTING**/
@@ -28,8 +28,11 @@ public class Controller {
         //IHeuristics power = HeuristicsFactory.getHeuristic(HeuristicsEnum.PowerHeuristics, instanceSpecifications, spot);
         //power.run();
 
-        IHeuristics neighbor = HeuristicsFactory.getHeuristic(HeuristicsEnum.NeighborHeuristics, instanceSpecifications, spot);
-        neighbor.run();
+        //IHeuristics neighbor = HeuristicsFactory.getHeuristic(HeuristicsEnum.NeighborHeuristics, instanceSpecifications, spot);
+        //neighbor.run();
+
+        IHeuristics localSearch = HeuristicsFactory.getHeuristic(HeuristicsEnum.LocalSearchHeuristic, instanceSpecifications, spot);
+        localSearch.run();
     }
 
     public static void main(String[] args){

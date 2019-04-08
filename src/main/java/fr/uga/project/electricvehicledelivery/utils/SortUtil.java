@@ -1,15 +1,11 @@
 package fr.uga.project.electricvehicledelivery.utils;
 
-import com.sun.deploy.util.ArrayUtil;
 import fr.uga.project.electricvehicledelivery.domain.SpotLink;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
-import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class SortUtil implements Comparator<Number>{
