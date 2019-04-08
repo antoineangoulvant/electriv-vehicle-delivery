@@ -52,12 +52,12 @@ public class PowerHeuristic implements IHeuristics {
         ArrayList<Integer> demands = new ArrayList<>(Arrays.asList(spots.getDemands()));
         ArrayList<Integer> spotAlreadyShipped = new ArrayList<>();
 
-        calcul(demands, currentCapacity, currentSpot, currentDistance, spotAlreadyShipped);
+        compute(demands, currentCapacity, currentSpot, currentDistance, spotAlreadyShipped);
 
 
     }
 
-    private void calcul(ArrayList<Integer> demands, int currentCapacity, int currentSpot, float currentDistance, ArrayList<Integer> spotAlreadyShipped) {
+    private void compute(ArrayList<Integer> demands, int currentCapacity, int currentSpot, float currentDistance, ArrayList<Integer> spotAlreadyShipped) {
         if (demands.size() == 0 || currentCapacity > instance.getCapacity() || currentDistance > instance.getMaxDist()){
             System.out.println("Stopping");
             return;
@@ -78,7 +78,7 @@ public class PowerHeuristic implements IHeuristics {
         System.out.println("This is a distance of "+nextSpot.value+", at this time i would drive already "+currentDistance);
         System.out.println("I got a capacity of "+currentCapacity+" of "+instance.getCapacity());
 
-        calcul(demands, currentCapacity, nextSpot.customer2, currentDistance, spotAlreadyShipped);
+        compute(demands, currentCapacity, nextSpot.customer2, currentDistance, spotAlreadyShipped);
 
     }
 }

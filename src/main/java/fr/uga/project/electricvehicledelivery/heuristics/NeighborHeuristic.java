@@ -17,6 +17,7 @@ public class NeighborHeuristic implements IHeuristics {
 
     public void run() {
         SortUtil sort = new SortUtil();
-        sort.neighbor_sortMatrix(this.spots.getDistances());
+        //sort.neighbor_Distances_Optimized(this.spots.getDistances());
+        sort.neighbor_Distances_Pick(this.spots.getDistances(), 3);
     }
 }
