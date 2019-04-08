@@ -15,7 +15,7 @@ public class Controller {
         InstanceSpecifications instanceSpecifications = ImportUtils.vehicleParse(Constants.Assets.ASSET_LYON0.getInstance()+"/vehicle.ini");
         System.out.println(instanceSpecifications);
 
-        Spots spot = new Spots(Constants.Assets.ASSET_LYON1.getInstance());
+        Spots spot = new Spots(Constants.Assets.ASSET_LYON0.getInstance());
 
 
         /** SORTING TESTING**/
