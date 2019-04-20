@@ -14,6 +14,7 @@ public class SortUtil implements Comparator<Number>{
         return new BigDecimal(a.toString()).compareTo(new BigDecimal(b.toString()));
     }
 
+    //region PowerHeuristic
     // Inspired by selection sort
     public <T> ArrayList<SpotLink<T>> sortMatrix(T[][] matrix){
         int totalNumberOfValues = matrix.length * matrix[0].length;
@@ -68,6 +69,7 @@ public class SortUtil implements Comparator<Number>{
 
         return sorted;
     }
+    //endregion
 
 //    public List<Integer> neighbor_Distances_Optimized(Float[][] distances) {
 //        //distances = removeDiagonalFromMatrix(distances);
@@ -116,35 +118,54 @@ public class SortUtil implements Comparator<Number>{
 //
 //    }
 
-    public List<List<Integer>> neighbor_Distances_Pick (int numberOfNeighborsWanted, List<Integer> listToParse) {
+
+    //region NeighborHeuristic
+    /**
+     * Calcul des voisins optimaux à partir d'une liste de base.
+     * La méthode calcule un nombre de voisins numberOfNeighborsWanted venant de la liste listToParse, qui améliorent
+     * la valeur des distances ajoutées comparé à la liste de base.
+     * Il effectue un simple swap de 2 valeurs dans la liste de base.
+     * Exemple : si ma liste de base est [0,1,2] avec pour valeur des distances ajoutées 0.5,
+     * et que l'on trouve un voisin [2,1,0] ayant pur valeur 0.2, alors ce dernier sera choisi.
+     * Note : si jamais le nombre requis de voisins à renvoyer n'est pas atteint, on recommence la recherche avec le premier voisin,
+     * jusqu'à numberOfRecursion boucles
+     * trouvé.
+     * @param numberOfNeighborsWanted
+     * @param listToParse
+     * @return
+     */
+    public List<List<Integer>> neighbor_Distances_Pick (int numberOfNeighborsWanted, List<Integer> listToParse, int numberOfRecursion) {
         int currentNumberNeighbor = 0;
         List<List<Integer>> neighbors = new ArrayList<>();
         //distances = removeWareHouse_Float(distances);
         List<Integer> currentList = listToParse == null ? buildDefaultList(distances) : listToParse;
-        //float defaultValue = getOptimisedValue(distances, currentList), pretendValue;
+        float defaultValue = getOptimisedValue(distances, currentList), pretendValue;
 
         for (int i = 0; i+1 < currentList.size() && currentNumberNeighbor < numberOfNeighborsWanted; i++){
             swap(i, i+1, currentList);
 
-            //pretendValue = getOptimisedValue(distances, currentList);
+            pretendValue = getOptimisedValue(distances, currentList);
 
-            //System.out.println("Array : "+currentList.toString()+"\nPretendValue : "+pretendValue+"\n OptimisedValue : "+defaultValue+"\nmainIndex : "+i+"\n");
+            System.out.println("Array : "+currentList.toString()+"\nPretendValue : "+pretendValue+"\n OptimisedValue : "+defaultValue+"\nmainIndex : "+i+"\n");
 
-            //if (pretendValue < defaultValue){
+            if (pretendValue < defaultValue){
                 System.out.println(" >> Adding list \n");
 
                 neighbors.add(new ArrayList<>(currentList));
                 currentNumberNeighbor++;
-            //}
+            }
 
             swap(i, i+1, currentList);
 
         }
 
-        if (neighbors.size() == 0)
+        if (neighbors.size() == 0 && !listToParse.containsAll(currentList))
             neighbors.add(currentList);
+        else if (neighbors.size() != 0 && numberOfRecursion <3 && neighbors.size() < numberOfNeighborsWanted){
+            neighbors.addAll(neighbor_Distances_Pick(numberOfNeighborsWanted-neighbors.size(), neighbors.get(0), numberOfRecursion+1));
+        }
 
-        System.out.println("Neighbors : \n"+neighbors.toString());
+        System.out.println("Neighbors : \n"+neighbors.toString()+"\n Recursion : "+numberOfRecursion);
         return neighbors;
 
     }
@@ -195,6 +216,9 @@ public class SortUtil implements Comparator<Number>{
         return optimisedList;
     }
 
+
+
+
     public Float[][] removeWareHouse_Float() {
         Float[][] tmp = new Float[distances.length-1][distances[0].length-1];
         for (int i = 0; i <= distances.length-2; i++){
@@ -222,6 +246,7 @@ public class SortUtil implements Comparator<Number>{
         optimisedList.set(y, tmp);
     }
 
+    /*
     private Float[][] removeDiagonalFromMatrix(Float[][] matrix) {
         int i =1, y;
         for (; i < matrix.length; i++){
@@ -234,7 +259,7 @@ public class SortUtil implements Comparator<Number>{
         }
         return matrix;
     }
-
+*/
     public float getOptimisedValue(Float[][] matrix, List<Integer> optimisedList) {
 
         float total = 0;
@@ -261,13 +286,17 @@ public class SortUtil implements Comparator<Number>{
 
     public <T> List<Integer> buildDefaultList(T[][] matrix) {
         List<Integer> res = new ArrayList<>();
+        //List<Integer> res = Arrays.asList(5,3,9,1,0,4,6,7,2,8);
         // Adding the warehouse at the beginning
         //res.add(matrix.length-1);
         for (int i = 0; i < matrix.length; i++){
             res.add(i);
         }
+
         return res;
     }
+
+    //endregion
 
     public void setDistances(Float[][] distances) {
         this.distances = distances;

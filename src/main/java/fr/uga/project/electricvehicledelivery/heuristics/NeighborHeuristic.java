@@ -2,6 +2,7 @@ package fr.uga.project.electricvehicledelivery.heuristics;
 
 import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
+import fr.uga.project.electricvehicledelivery.utils.FileUtil;
 import fr.uga.project.electricvehicledelivery.utils.SortUtil;
 
 import java.util.List;
@@ -26,11 +27,12 @@ public class NeighborHeuristic implements IHeuristics {
         //List<List<Integer>> list = sort.neighbor_Distances_Pick(3, null);
         Float[][] distancesWithoutWare = sort.removeWareHouse_Float();
         List<Integer> defaultList = sort.buildDefaultList(distancesWithoutWare);
-        float basicValue = sort.getOptimisedValue(distancesWithoutWare, defaultList);
 
-        List<List<Integer>> list = sort.neighbor_Distances_Pick(3, defaultList);
+        List<List<Integer>> list = sort.neighbor_Distances_Pick(3, defaultList, 0);
 
 
+        List<List<String>> strList = FileUtil.AddInitialWarepointSpot(list);
+        FileUtil.WriteCompleteTravel(strList, "neighbor.txt");
 
 
     }

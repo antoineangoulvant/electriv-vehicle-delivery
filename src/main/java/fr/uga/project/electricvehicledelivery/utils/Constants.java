@@ -51,4 +51,5 @@ public class Constants {
     public static final int DISTANCE_WEIGHT = 1;
     public static final int DELIVERY_LENGTH_WEIGHT = 1;
     public static final int CAPACITY_WEIGHT = 1;
+    public static final String RESULTS_FOLDER_PATH = "src/main/resources/Results/";
 }
