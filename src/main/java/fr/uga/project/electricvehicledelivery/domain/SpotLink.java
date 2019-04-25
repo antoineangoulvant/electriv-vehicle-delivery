@@ -1,7 +1,5 @@
 package fr.uga.project.electricvehicledelivery.domain;
 
-import java.util.ArrayList;
-
 public class SpotLink<T> {
 
     public int customer1;
@@ -15,7 +13,6 @@ public class SpotLink<T> {
     }
 
     public static <T> SpotLink<T> DEFAULT(){
-        return new SpotLink<T>(0, 0, null);
+        return new SpotLink<>(0, 0, null);
     }
-
 }

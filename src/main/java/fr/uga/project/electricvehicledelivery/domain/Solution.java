@@ -13,7 +13,7 @@ public class Solution {
     private List<Truck> trucksList;
     private int nbConstraintDist;
     private int nbConstraintQuantity;
-    private int nbConstrainDuraton;
+    private int nbConstraintDuraton;
     private int nbMissingVisits;
     private int nbMultipleVisits;
 
@@ -23,7 +23,7 @@ public class Solution {
                 ((trucksList.size() - 1) * 500) +
                 nbConstraintDist * 50000 +
                 nbConstraintQuantity * 10000 +
-                nbConstrainDuraton * 1000 +
+                nbConstraintDuraton * 1000 +
                 (nbMissingVisits+nbMultipleVisits) * 100000;
     }
 }

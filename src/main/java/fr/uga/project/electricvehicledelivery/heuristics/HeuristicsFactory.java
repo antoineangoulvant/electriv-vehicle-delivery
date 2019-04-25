@@ -7,8 +7,8 @@ public class HeuristicsFactory {
 
     public static IHeuristics getHeuristic(HeuristicsEnum enumHeuristics, InstanceSpecifications instance, Spots spots){
         switch (enumHeuristics) {
-            case FirstHeuristics:
-                return new FirstHeuristics();
+            case FirstHeuristic:
+                return new FirstHeuristic(instance, spots);
             case PowerHeuristics:
                 return new PowerHeuristic(instance, spots);
             case NeighborHeuristics:

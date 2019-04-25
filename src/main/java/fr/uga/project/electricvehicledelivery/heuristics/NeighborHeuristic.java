@@ -7,6 +7,7 @@ import fr.uga.project.electricvehicledelivery.utils.SortUtil;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class NeighborHeuristic implements IHeuristics {
 
@@ -32,9 +33,6 @@ public class NeighborHeuristic implements IHeuristics {
 
 
         List<List<String>> strList = FileUtil.AddInitialWarepointSpot(list);
-        FileUtil.WriteCompleteTravel(strList, "neighbor.txt");
-
-
+        FileUtil.WriteCompleteTravel(strList, "neighbor-"+ UUID.randomUUID() +".txt");
     }
-
 }

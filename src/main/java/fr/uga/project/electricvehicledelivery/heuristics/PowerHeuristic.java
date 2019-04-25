@@ -10,10 +10,10 @@ import java.util.Arrays;
 
 public class PowerHeuristic implements IHeuristics {
 
-    Spots spots;
-    InstanceSpecifications instance;
-    ArrayList<SpotLink<Float>> sortedDistance;
-    ArrayList<SpotLink<Integer>> sortedTimes;
+    private Spots spots;
+    private InstanceSpecifications instance;
+    private ArrayList<SpotLink<Float>> sortedDistance;
+    private ArrayList<SpotLink<Integer>> sortedTimes;
 
     public PowerHeuristic(InstanceSpecifications instance, Spots spots){
         SortUtil sort = new SortUtil();
@@ -43,7 +43,6 @@ public class PowerHeuristic implements IHeuristics {
     }
 
     public void run(){
-
         // TODO : times
 
         int currentCapacity = 0;
@@ -53,8 +52,6 @@ public class PowerHeuristic implements IHeuristics {
         ArrayList<Integer> spotAlreadyShipped = new ArrayList<>();
 
         compute(demands, currentCapacity, currentSpot, currentDistance, spotAlreadyShipped);
-
-
     }
 
     private void compute(ArrayList<Integer> demands, int currentCapacity, int currentSpot, float currentDistance, ArrayList<Integer> spotAlreadyShipped) {
@@ -79,6 +76,5 @@ public class PowerHeuristic implements IHeuristics {
         System.out.println("I got a capacity of "+currentCapacity+" of "+instance.getCapacity());
 
         compute(demands, currentCapacity, nextSpot.customer2, currentDistance, spotAlreadyShipped);
-
     }
 }
