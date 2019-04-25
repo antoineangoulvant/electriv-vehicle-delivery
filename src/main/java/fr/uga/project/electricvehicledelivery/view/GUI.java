@@ -2,6 +2,7 @@ package fr.uga.project.electricvehicledelivery.view;
 
 import fr.uga.project.electricvehicledelivery.Controller;
 import fr.uga.project.electricvehicledelivery.heuristics.HeuristicsEnum;
+import fr.uga.project.electricvehicledelivery.utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,9 +25,25 @@ public class GUI extends JFrame implements ActionListener {
             }
         };
 
+        final DefaultComboBoxModel assets = new DefaultComboBoxModel();
+        Arrays.stream(Constants.Assets.values()).forEach(a ->
+            assets.addElement(a.getInstance())
+        );
+
+        final JComboBox assetsList = new JComboBox(assets);
+
         addWindowListener(wl);
         setSize(800,600);
         setLocationRelativeTo(null);
+
+        JPanel container = new JPanel();
+
+        JPanel middlePanel = new JPanel();
+        JLabel assetsListTitle = new JLabel("Liste des assets : ");
+        middlePanel.add(assetsListTitle);
+        middlePanel.add(assetsList);
+
+        container.add(middlePanel);
 
         JPanel buttonsPanel = new JPanel();
         this.buttons = new ArrayList<>();
@@ -37,7 +54,9 @@ public class GUI extends JFrame implements ActionListener {
             tempButton.addActionListener(this);
         });
 
-        add(buttonsPanel);
+        container.add(buttonsPanel);
+
+        add(container);
 
         setVisible(true);
     }

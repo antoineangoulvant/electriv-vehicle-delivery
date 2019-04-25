@@ -29,15 +29,6 @@ public class Controller {
          ArrayList<SpotLink<Float>> toto = util.sortMatrix(spot.get_distances());
          ArrayList<SpotLink<Integer>> tata = util.sortMatrix(spot.get_times());
          **/
-
-        //IHeuristics power = HeuristicsFactory.getHeuristic(HeuristicsEnum.PowerHeuristics, instanceSpecifications, spot);
-        //power.run();
-
-        IHeuristics neighbor = HeuristicsFactory.getHeuristic(HeuristicsEnum.NeighborHeuristics, instanceSpecifications, spot);
-        neighbor.run();
-
-//        IHeuristics localSearch = HeuristicsFactory.getHeuristic(HeuristicsEnum.LocalSearchHeuristic, instanceSpecifications, spot);
-//        localSearch.run();
         new GUI(this);
     }
 
