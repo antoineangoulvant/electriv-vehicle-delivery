@@ -18,7 +18,7 @@ public class ImportUtils {
                     Integer.parseInt(iniFile.get("Vehicle","max_dist")),
                     Integer.parseInt(iniFile.get("Vehicle","capacity")),
                     Integer.parseInt(iniFile.get("Vehicle","charge_fast")),
-                    Integer.parseInt(iniFile.get("Vehicle","charge_midium")),
+                    Integer.parseInt(iniFile.get("Vehicle","charge_medium")),
                     Integer.parseInt(iniFile.get("Vehicle", "charge_slow")),
                     iniFile.get("Vehicle", "start_time"),
                     iniFile.get("Vehicle", "end_time")

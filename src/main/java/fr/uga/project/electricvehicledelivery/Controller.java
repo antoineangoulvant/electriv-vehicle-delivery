@@ -6,6 +6,7 @@ import fr.uga.project.electricvehicledelivery.heuristics.*;
 import fr.uga.project.electricvehicledelivery.utils.Constants;
 import fr.uga.project.electricvehicledelivery.utils.ImportUtils;
 import fr.uga.project.electricvehicledelivery.view.GUI;
+import lombok.Getter;
 
 import java.util.Arrays;
 
@@ -13,16 +14,12 @@ import java.util.Arrays;
  * Classe centrale de l'application
  * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
  */
+@Getter
 public class Controller {
     private InstanceSpecifications instanceSpecifications;
     private Spots spot;
 
     private Controller() {
-        this.instanceSpecifications = ImportUtils.vehicleParse(Constants.Assets.ASSET_LYON0.getInstance()+"/vehicle.ini");
-        System.out.println(instanceSpecifications);
-
-        this.spot = new Spots(Constants.Assets.ASSET_LYON0.getInstance());
-
         /** SORTING TESTING**/
         /**
          SortUtil util = new SortUtil();
@@ -33,13 +30,18 @@ public class Controller {
     }
 
     public void launchHeuristic(String heuristic){
-        System.out.println(heuristic);
         Arrays.stream(HeuristicsEnum.values()).forEach(h -> {
             if(heuristic.equals(h.toString())){
                 IHeuristics temp = HeuristicsFactory.getHeuristic(h, this.instanceSpecifications, this.spot);
                 temp.run();
             }
         });
+    }
+
+    public void loadInstance(String path){
+        this.instanceSpecifications = ImportUtils.vehicleParse(path+"/vehicle.ini");
+        this.spot = new Spots(path);
+        System.out.println(instanceSpecifications);
     }
 
     public static void main(String[] args){

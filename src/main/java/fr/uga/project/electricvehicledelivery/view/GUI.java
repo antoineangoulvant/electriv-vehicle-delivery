@@ -13,6 +13,8 @@ import java.util.Arrays;
 public class GUI extends JFrame implements ActionListener {
     private Controller controller;
     private ArrayList<JButton> buttons;
+    private JComboBox<Constants.Assets> assetsList;
+    private InstanceSpecificationsPanel instancePanel;
 
     public GUI(Controller controller){
         super("Problème de livraison des véhicules électriques");
@@ -27,13 +29,14 @@ public class GUI extends JFrame implements ActionListener {
 
         final DefaultComboBoxModel assets = new DefaultComboBoxModel();
         Arrays.stream(Constants.Assets.values()).forEach(a ->
-            assets.addElement(a.getInstance())
+            assets.addElement(a)
         );
 
-        final JComboBox assetsList = new JComboBox(assets);
+        this.assetsList = new JComboBox(assets);
+        this.assetsList.addActionListener(this);
 
         addWindowListener(wl);
-        setSize(800,600);
+        setSize(800,400);
         setLocationRelativeTo(null);
 
         JPanel container = new JPanel();
@@ -41,7 +44,7 @@ public class GUI extends JFrame implements ActionListener {
         JPanel middlePanel = new JPanel();
         JLabel assetsListTitle = new JLabel("Liste des assets : ");
         middlePanel.add(assetsListTitle);
-        middlePanel.add(assetsList);
+        middlePanel.add(this.assetsList);
 
         container.add(middlePanel);
 
@@ -53,8 +56,12 @@ public class GUI extends JFrame implements ActionListener {
             buttonsPanel.add(tempButton);
             tempButton.addActionListener(this);
         });
-
         container.add(buttonsPanel);
+
+        instancePanel = new InstanceSpecificationsPanel(controller.getInstanceSpecifications());
+        container.add(instancePanel);
+
+        container.add(new JLabel("Développé par Antoine Angoulvant et Andréas Dedieu Meille"));
 
         add(container);
 
@@ -63,10 +70,16 @@ public class GUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        buttons.forEach(b -> {
+       if(e.getSource().equals(this.assetsList)){
+           JComboBox<Constants.Assets> combo = (JComboBox<Constants.Assets>) e.getSource();
+           Constants.Assets selected = (Constants.Assets) combo.getSelectedItem();
+           controller.loadInstance(selected.getInstance());
+           instancePanel.setInstanceSpecifications(controller.getInstanceSpecifications());
+       }
+       buttons.forEach(b -> {
             if(b.equals(e.getSource())){
                 controller.launchHeuristic(b.getText());
             }
-        });
+       });
     }
 }
