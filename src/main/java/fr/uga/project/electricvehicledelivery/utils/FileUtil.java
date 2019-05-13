@@ -15,16 +15,21 @@ public class FileUtil {
 
     /**
      * Add the "C" spot at the beginning of each list from the parameter list, and convert all into string
+     * Also, replace the max value in list by "R" (for recharges)
      * @param list
      * @return
      */
-    public static List<List<String>> AddInitialWarepointSpot(List<List<Integer>> list) {
+    public static List<List<String>> AddWarepointSpot(List<List<Integer>> list) {
         List<List<String>> strList = new ArrayList<>();
 
         for (List<Integer> subList: list){
             List<String> tmp = new ArrayList<>();
             for(int i = 0; i < subList.size(); i++){
-                tmp.add(subList.get(i).toString());
+                if (subList.get(i) == subList.size()-1){
+                    tmp.add("R");
+                }else{
+                    tmp.add(subList.get(i).toString());
+                }
             }
             tmp.add(0, "C");
             strList.add(tmp);
