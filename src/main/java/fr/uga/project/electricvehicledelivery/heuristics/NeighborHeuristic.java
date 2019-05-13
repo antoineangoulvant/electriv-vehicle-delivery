@@ -5,10 +5,7 @@ import fr.uga.project.electricvehicledelivery.domain.Spots;
 import fr.uga.project.electricvehicledelivery.utils.FileUtil;
 import fr.uga.project.electricvehicledelivery.utils.SortUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class NeighborHeuristic implements IHeuristics {
 
@@ -82,6 +79,76 @@ public class NeighborHeuristic implements IHeuristics {
         return neighbors;
 
     }
+
+    public List<Integer> neighbor_Distances_First_Pick (List<Integer> listToParse) throws Exception {
+
+        if (listToParse == null || listToParse.size() == 0){
+            throw new Exception("ListToParse is null or Empty");
+        }
+
+        HashMap<List<Integer>, Float> map = new HashMap<>();
+
+        Float[][] distances = this.spots.getDistances();
+
+        List<Integer> firstList = getFirstNeighbor(listToParse);
+        List<Integer> bestList = new ArrayList<>(firstList);
+
+        while(firstList != null){
+            map.put(new ArrayList<>(firstList), getOptimisedValue(distances, firstList));
+            bestList = new ArrayList<>(firstList);
+            firstList = getFirstNeighbor(firstList);
+
+        }
+
+        return bestList;
+    }
+
+    private List<Integer> getFirstNeighbor(List<Integer> currentList) {
+        Float[][] distances = this.spots.getDistances();
+        float defaultValue = getOptimisedValue(distances, currentList), pretendValue;
+
+        for (int i = 0; i+1 < currentList.size(); i++){
+            swap(i, i+1, currentList);
+
+            pretendValue = getOptimisedValue(distances, currentList);
+
+
+            if (pretendValue < defaultValue){
+                System.out.println("Array : "+currentList.toString()+"\nPretendValue : "+pretendValue+"\n OptimisedValue : "+defaultValue+"\nPosition in Array : "+i+"\n");
+
+                System.out.println(" >> Adding list \n");
+
+                return currentList;
+            }
+
+            swap(i, i+1, currentList);
+
+        }
+
+        return null;
+
+    }
+
+    public HashMap<List<Integer>, Float> neighbor_Distances_Best_Pick (List<Integer> listToParse) throws Exception {
+
+        if (listToParse == null || listToParse.size() == 0){
+            throw new Exception("ListToParse is null or Empty");
+        }
+
+        HashMap<List<Integer>, Float> map = new HashMap<>();
+
+        Float[][] distances = this.spots.getDistances();
+
+        List<Integer> firstList = getFirstNeighbor(listToParse);
+
+        while(firstList != null){
+            map.put(new ArrayList<>(firstList), getOptimisedValue(distances, firstList));
+            firstList = getFirstNeighbor(firstList);
+        }
+
+        return map;
+    }
+
 
     public List<Integer> neighbor_Times_Optimised(Integer[][] times){
         times = removeWareHouse_Int(times);
@@ -214,10 +281,16 @@ public class NeighborHeuristic implements IHeuristics {
         Float[][] distancesWithoutWare = removeWareHouse_Float();
         List<Integer> defaultList = buildDefaultList(distancesWithoutWare);
 
-        List<List<Integer>> list = neighbor_Distances_Pick(3, defaultList, 0);
+        List<Integer> list = null;
+        try {
+            list = neighbor_Distances_First_Pick(defaultList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        System.out.println("Best List : \n"+list.toString()+"\n Best Value : "+getOptimisedValue(this.spots.getDistances(), list));
 
-        List<List<String>> strList = FileUtil.AddInitialWarepointSpot(list);
-        FileUtil.WriteCompleteTravel(strList, "neighbor-"+ UUID.randomUUID() +".txt");
+        //List<List<String>> strList = FileUtil.AddInitialWarepointSpot(list);
+        //FileUtil.WriteCompleteTravel(strList, "neighbor-"+ UUID.randomUUID() +".txt");
     }
 }
