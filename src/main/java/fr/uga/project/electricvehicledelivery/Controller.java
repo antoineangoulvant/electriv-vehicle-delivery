@@ -8,6 +8,7 @@ import fr.uga.project.electricvehicledelivery.utils.ImportUtils;
 import fr.uga.project.electricvehicledelivery.view.GUI;
 import lombok.Getter;
 
+import java.sql.Time;
 import java.util.Arrays;
 
 /**
@@ -41,7 +42,6 @@ public class Controller {
     public void loadInstance(String path){
         this.instanceSpecifications = ImportUtils.vehicleParse(path+"/vehicle.ini");
         this.spot = new Spots(path);
-        System.out.println(instanceSpecifications);
     }
 
     public static void main(String[] args){

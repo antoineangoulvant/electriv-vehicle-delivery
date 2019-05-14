@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * Classe modélisant les caractéristiques d'une instance
  * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
@@ -19,6 +21,14 @@ public class InstanceSpecifications {
     private int chargeSlow;
     private String startTime;
     private String endTime;
+
+    public int getStartTimeToInt() {
+       return Integer.parseInt(this.startTime.substring(0,this.startTime.indexOf(":")));
+    }
+
+    public int getEndTimeToInt() {
+        return Integer.parseInt(this.endTime.substring(0,this.endTime.indexOf(":")));
+    }
 
     public String toString(){
         return "\n\tCaractéristiques de l'instance \n\n" +
