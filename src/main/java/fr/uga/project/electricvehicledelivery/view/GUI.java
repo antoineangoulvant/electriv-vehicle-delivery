@@ -32,6 +32,7 @@ public class GUI extends JFrame implements ActionListener {
             assets.addElement(a)
         );
 
+
         this.assetsList = new JComboBox(assets);
         this.assetsList.addActionListener(this);
 

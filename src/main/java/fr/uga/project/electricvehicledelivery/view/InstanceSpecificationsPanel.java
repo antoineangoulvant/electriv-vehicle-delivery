@@ -27,7 +27,7 @@ public class InstanceSpecificationsPanel extends JPanel {
         distMax = new JLabel();
         capaMax = new JLabel();
         chargL = new JLabel();
-        chargM = new JLabel("TEST");
+        chargM = new JLabel();
         chargR = new JLabel();
         debut = new JLabel();
         fin = new JLabel();
