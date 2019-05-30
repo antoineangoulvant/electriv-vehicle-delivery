@@ -12,7 +12,7 @@ public class PowerHeuristic implements IHeuristics {
 
     private Spots spots;
     private InstanceSpecifications instance;
-    private ArrayList<SpotLink<Float>> sortedDistance;
+    private ArrayList<SpotLink<Double>> sortedDistance;
     private ArrayList<SpotLink<Integer>> sortedTimes;
 
     public PowerHeuristic(InstanceSpecifications instance, Spots spots){
@@ -23,7 +23,7 @@ public class PowerHeuristic implements IHeuristics {
         this.sortedTimes = sort.sortMatrix(spots.getTimes());
     }
 
-    public SpotLink<Float> getOptimisedDistance(int costumerDeparture, ArrayList<Integer> spotsAlreadyShipped){
+    public SpotLink<Double> getOptimisedDistance(int costumerDeparture, ArrayList<Integer> spotsAlreadyShipped){
         return this.sortedDistance.stream()
                 .filter((spotLink) -> spotLink.customer1 == costumerDeparture )
                 .filter((spotLink) -> !spotsAlreadyShipped.contains(spotLink.customer1))
@@ -60,7 +60,7 @@ public class PowerHeuristic implements IHeuristics {
             return;
         }
 
-        SpotLink<Float> nextSpot = this.getOptimisedDistance(currentSpot, spotAlreadyShipped);
+        SpotLink<Double> nextSpot = this.getOptimisedDistance(currentSpot, spotAlreadyShipped);
         currentDistance+= nextSpot.value;
         if (demands.get(nextSpot.customer2) != null){
             currentCapacity+= demands.get(nextSpot.customer2);

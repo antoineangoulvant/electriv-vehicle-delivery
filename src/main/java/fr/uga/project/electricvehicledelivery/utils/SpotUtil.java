@@ -14,7 +14,7 @@ public class SpotUtil {
      * @param distanceMax la distanceMax du véhicule
      * @return
      */
-    public static List<Integer> AddRechargeStops(Float[][] distances, List<Integer> list, int distanceMax){
+    public static List<Integer> AddRechargeStops(Double[][] distances, List<Integer> list, int distanceMax){
         float distanceTotale = 0;
         List<Integer> resultList = new ArrayList<>(list);
         for(int i = 0; i < list.size()-1; i++){

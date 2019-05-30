@@ -34,12 +34,12 @@ public class ImportUtils {
         return instanceSpecifications;
     }
 
-    public static Float[][] coordsParse(String assetPath){
+    public static Double[][] coordsParse(String assetPath){
         String pathFile_times = "coords.txt";
         String fullPath = assetPath + "/"+ pathFile_times;
 
         Scanner input = null;
-        Float[][] coordsMatrix;
+        Double[][] coordsMatrix;
 
         try {
             input = new Scanner(new File(fullPath));
@@ -50,7 +50,7 @@ public class ImportUtils {
         int colSize = 2;
         int lineSize = getLineSize(fullPath);
 
-        coordsMatrix = new Float[lineSize][colSize];
+        coordsMatrix = new Double[lineSize][colSize];
 
         int currentLinePosition = 0;
 
@@ -59,9 +59,9 @@ public class ImportUtils {
             Scanner colReader = new Scanner(input.nextLine());
             while (colReader.hasNext()) {
                 String[] coords = colReader.next().split(",");
-                coordsMatrix[currentLinePosition][currentColPosition] = Float.parseFloat(coords[0]);
+                coordsMatrix[currentLinePosition][currentColPosition] = Double.parseDouble(coords[0]);
                 currentColPosition++;
-                coordsMatrix[currentLinePosition][currentColPosition] = Float.parseFloat(coords[1]);
+                coordsMatrix[currentLinePosition][currentColPosition] = Double.parseDouble(coords[1]);
                 currentLinePosition++;
             }
 
@@ -69,12 +69,12 @@ public class ImportUtils {
         return coordsMatrix;
     }
 
-    public static Float[][] distancesParse(String assetPath){
+    public static Double[][] distancesParse(String assetPath){
         String pathFile_times = "distances.txt";
         String fullPath = assetPath + "/"+ pathFile_times;
 
         Scanner input = null;
-        Float[][] distancesMatrix;
+        Double[][] distancesMatrix;
 
         try {
             input = new Scanner(new File(fullPath));
@@ -85,7 +85,7 @@ public class ImportUtils {
         int colSize = getColSize(fullPath);
         int lineSize = getLineSize(fullPath);
 
-        distancesMatrix = new Float[lineSize][colSize];
+        distancesMatrix = new Double[lineSize][colSize];
 
         int currentLinePosition = 0;
 
@@ -93,7 +93,7 @@ public class ImportUtils {
             int currentColPosition = 0;
             Scanner colReader = new Scanner(input.nextLine());
             while (colReader.hasNext()) {
-                distancesMatrix[currentLinePosition][currentColPosition] = Float.parseFloat(colReader.next());
+                distancesMatrix[currentLinePosition][currentColPosition] = Double.parseDouble(colReader.next());
                 currentColPosition++;
             }
             currentLinePosition++;

@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Classe représentant une solution d'heuristique
+ */
 @NoArgsConstructor
 @Data
 public class Solution {

@@ -24,7 +24,7 @@ public class NeighborHeuristic implements IHeuristics {
             throw new Exception("ListToParse is null or Empty");
         }
         
-        Float[][] distances = this.spots.getDistances();
+        Double[][] distances = this.spots.getDistances();
 
         List<Integer> firstList = getFirstNeighbor(listToParse);
         List<Integer> retainedList = new ArrayList<>(firstList);
@@ -40,7 +40,7 @@ public class NeighborHeuristic implements IHeuristics {
     }
 
     private List<Integer> getFirstNeighbor(List<Integer> currentList) {
-        Float[][] distances = this.spots.getDistances();
+        Double[][] distances = this.spots.getDistances();
         float defaultValue = getOptimisedValue(distances, currentList), pretendValue;
 
         for (int i = 0; i+1 < currentList.size(); i++){
@@ -74,7 +74,7 @@ public class NeighborHeuristic implements IHeuristics {
             throw new Exception("ListToParse is null or Empty");
         }
         
-        Float[][] distances = this.spots.getDistances();
+        Double[][] distances = this.spots.getDistances();
 
         List<Integer> tmpList = getBestNeighbor(listToParse);
         List<Integer> bestList = new ArrayList<>(tmpList);
@@ -91,7 +91,7 @@ public class NeighborHeuristic implements IHeuristics {
 
     private List<Integer> getBestNeighbor(List<Integer> currentList) {
 
-        Float[][] distances = this.spots.getDistances();
+        Double[][] distances = this.spots.getDistances();
         float defaultValue = getOptimisedValue(distances, currentList), pretendValue;
         List<Integer> currentBestList = new ArrayList<>();
 
@@ -208,7 +208,7 @@ public class NeighborHeuristic implements IHeuristics {
      * @param optimisedList
      * @return
      */
-    private float getOptimisedValue(Float[][] matrix, List<Integer> optimisedList) {
+    private float getOptimisedValue(Double[][] matrix, List<Integer> optimisedList) {
 
         float total = 0;
         for (int i = 0; i+1 < optimisedList.size(); i++){
@@ -258,9 +258,9 @@ public class NeighborHeuristic implements IHeuristics {
      * Renvoie la matrice des distances enlevée du point "WareHouse" qui correspond à la dernière colonne de la matrice
      * @return
      */
-    private Float[][] removeWareHouse_Float() {
-        Float[][] distances = this.spots.getDistances();
-        Float[][] tmp = new Float[distances.length-1][distances[0].length-1];
+    private Double[][] removeWareHouse_Double() {
+        Double[][] distances = this.spots.getDistances();
+        Double[][] tmp = new Double[distances.length-1][distances[0].length-1];
         for (int i = 0; i <= distances.length-2; i++){
             for (int y = 0; y <= distances.length-2; y++){
                 tmp[i][y] = distances[i][y];
@@ -286,7 +286,7 @@ public class NeighborHeuristic implements IHeuristics {
 
 
     public void run() {
-        Float[][] distancesWithoutWare = removeWareHouse_Float();
+        Double[][] distancesWithoutWare = removeWareHouse_Double();
         List<Integer> defaultList = buildDefaultList(distancesWithoutWare);
 
         List<Integer> list = null;

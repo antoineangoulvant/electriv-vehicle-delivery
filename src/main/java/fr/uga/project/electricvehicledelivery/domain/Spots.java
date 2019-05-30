@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Spots {
-    private Float[][] coords;
-    private Float[][] distances;
+    private Double[][] coords;
+    private Double[][] distances;
     private Integer[][] times;
     private Integer[] demands;
 
@@ -34,11 +34,11 @@ public class Spots {
         return ImportUtils.timesParse(assetPath);
     }
 
-    private Float[][] importDistances(String assetPath) {
+    private Double[][] importDistances(String assetPath) {
         return ImportUtils.distancesParse(assetPath);
     }
 
-    private Float[][]  importCoords(String assetPath) {
+    private Double[][]  importCoords(String assetPath) {
         return ImportUtils.coordsParse(assetPath);
     }
 
