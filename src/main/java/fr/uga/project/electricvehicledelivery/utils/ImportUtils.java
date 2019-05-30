@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.util.*;
 
 public class ImportUtils {
+    /**
+     * Méthode permettant de parser le fichier avec les caractéristiques du véhicule
+     * @param path chemin d'accès du fichier
+     * @return InstanceSpecifications
+     */
     public static InstanceSpecifications vehicleParse(String path){
         InstanceSpecifications instanceSpecifications = null;
         try {
