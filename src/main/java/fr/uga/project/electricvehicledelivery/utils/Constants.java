@@ -2,7 +2,7 @@ package fr.uga.project.electricvehicledelivery.utils;
 
 /**
  * Classe contenant toutes les constantes utiles dans l'application
- * Réalisé par Antoine Angoulvant et Andréas Dedieu Meille
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
  */
 public class Constants {
     public enum Assets{

@@ -3,6 +3,10 @@ package fr.uga.project.electricvehicledelivery.heuristics;
 import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
 
+/**
+ * Factory des différentes heuristiques
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ */
 public class HeuristicsFactory {
 
     public static IHeuristics getHeuristic(HeuristicsEnum enumHeuristics, InstanceSpecifications instance, Spots spots){

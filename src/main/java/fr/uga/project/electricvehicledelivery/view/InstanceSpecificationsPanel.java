@@ -5,6 +5,10 @@ import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panneau contenant les informations de l'instance
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ */
 public class InstanceSpecificationsPanel extends JPanel {
     private InstanceSpecifications instanceSpecifications;
     private JLabel distMax;

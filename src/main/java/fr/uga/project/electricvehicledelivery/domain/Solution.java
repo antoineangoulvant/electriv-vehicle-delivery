@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Classe représentant une solution d'heuristique
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
  */
 @NoArgsConstructor
 @Data

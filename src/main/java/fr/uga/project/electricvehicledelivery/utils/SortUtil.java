@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ */
 public class SortUtil implements Comparator<Number>{
 
     public Float[][] distances;

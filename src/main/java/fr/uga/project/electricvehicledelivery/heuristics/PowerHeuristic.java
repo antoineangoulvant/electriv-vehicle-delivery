@@ -8,6 +8,10 @@ import fr.uga.project.electricvehicledelivery.utils.SortUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Heuristique permettant de générer une solution optimale
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ */
 public class PowerHeuristic implements IHeuristics {
 
     private Spots spots;

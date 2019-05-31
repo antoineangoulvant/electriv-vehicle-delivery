@@ -9,6 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Classe utilitaire d'import des données
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ */
 public class ImportUtils {
     /**
      * Méthode permettant de parser le fichier avec les caractéristiques du véhicule

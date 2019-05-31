@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ */
 public class FileUtil {
 
 

@@ -7,6 +7,10 @@ import fr.uga.project.electricvehicledelivery.utils.SpotUtil;
 
 import java.util.*;
 
+/**
+ * Heuristique pour générer les voisinages
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ */
 public class NeighborHeuristic implements IHeuristics {
 
     Spots spots;

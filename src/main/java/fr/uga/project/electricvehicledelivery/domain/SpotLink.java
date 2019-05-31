@@ -1,5 +1,9 @@
 package fr.uga.project.electricvehicledelivery.domain;
 
+/**
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ * @param <T>
+ */
 public class SpotLink<T> {
 
     public int customer1;

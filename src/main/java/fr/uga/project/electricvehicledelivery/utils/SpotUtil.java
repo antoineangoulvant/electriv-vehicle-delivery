@@ -3,6 +3,9 @@ package fr.uga.project.electricvehicledelivery.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ */
 public class SpotUtil {
 
     /**

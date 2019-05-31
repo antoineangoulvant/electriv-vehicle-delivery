@@ -10,6 +10,10 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Classe permettant de générer la fenêtre de l'application
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
+ */
 public class GUI extends JFrame implements ActionListener {
     private Controller controller;
     private ArrayList<JButton> buttons;
