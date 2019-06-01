@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class Solution {
-    private double totalDistance;
     private double totalDuration;
     private List<Truck> trucksList;
     private int nbConstraintDist;
@@ -21,8 +20,16 @@ public class Solution {
     private int nbMissingVisits;
     private int nbMultipleVisits;
 
+    /**
+     * Méthode permettant de calculer la distance totale
+     * @return distance totale
+     */
+    private Double getTotalDistance(){
+        return trucksList.stream().mapToDouble(Truck::getDistance).sum();
+    }
+
     public double evaluate(){
-        return totalDistance +
+        return this.getTotalDistance() +
                 totalDuration +
                 ((trucksList.size() - 1) * 500) +
                 nbConstraintDist * 50000 +

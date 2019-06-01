@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 /**
  * Classe de test de la classe utilitaire d'import
+ * @author Antoine Angoulvant - Andréas Dedieu Meille
  */
 public class ImportUtilsTest {
     /**

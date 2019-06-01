@@ -89,6 +89,7 @@ public class Spots {
 
         for(int i = 0 ; i < demands.length ; i++ ){
             Customer temp = new Customer();
+            temp.setId(i);
             temp.setX(coords[i][0]);
             temp.setY(coords[i][1]);
             temp.setDemand(demands[i]);

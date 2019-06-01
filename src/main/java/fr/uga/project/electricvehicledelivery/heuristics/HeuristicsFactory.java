@@ -8,7 +8,13 @@ import fr.uga.project.electricvehicledelivery.domain.Spots;
  * @author Antoine Angoulvant - Andréas Dedieu Meille
  */
 public class HeuristicsFactory {
-
+    /**
+     * Méthode permettant d'exécuter les différentes heuristiques
+     * @param enumHeuristics énumérations de toutes les heuristiques
+     * @param instance caractéristiques de l'instance
+     * @param spots points utilisés par l'heuristique
+     * @return heuristique
+     */
     public static IHeuristics getHeuristic(HeuristicsEnum enumHeuristics, InstanceSpecifications instance, Spots spots){
         switch (enumHeuristics) {
             case PowerHeuristics:

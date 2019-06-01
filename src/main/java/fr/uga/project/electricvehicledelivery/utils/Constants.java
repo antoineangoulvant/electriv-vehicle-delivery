@@ -43,13 +43,18 @@ public class Constants {
             this.instance = instance;
         }
 
+        /** Méthode retournant l'instance avec le chemin d'accès */
         public String getInstance(){
             return PATH + this.instance;
         }
     }
 
-    public static final int DISTANCE_WEIGHT = 1;
-    public static final int DELIVERY_LENGTH_WEIGHT = 1;
-    public static final int CAPACITY_WEIGHT = 1;
-    public static final String RESULTS_FOLDER_PATH = "src/main/resources/Results/";
+    /** Constante représentant un chargement de camion dans la solution */
+    public static final String TRUCK_LOADING = "C";
+
+    /** Constante représentant un cargement de batterie dans la solution */
+    public static final String BATTERY_LOADING = "R";
+
+    /** Chemin d'accès pour les résultats */
+    static final String RESULTS_FOLDER_PATH = "src/main/resources/Results/";
 }
