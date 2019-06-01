@@ -33,4 +33,21 @@ public class SpotUtil {
         }
         return resultList;
     }
+
+    public static List<Integer> AddMultipleDays(Integer[][] times, List<Integer> retainedList, int endTimeToSeconds) {
+        float tempsTotal = 0;
+        List<Integer> resultList = new ArrayList<>(retainedList);
+        for(int i = 0; i < retainedList.size()-1; i++){
+
+            // The first condition is unvalid
+            if ( ((tempsTotal+times[i][0]) > endTimeToSeconds) || ((tempsTotal+times[i][i+1]) > endTimeToSeconds)){
+                System.out.println("Retour à la base ! (A la position "+i+", avant "+retainedList.get(i)+") Le dépasse ma capacité "+endTimeToSeconds+" car j'ai déjà fait "+tempsTotal+" secondes et que le prochain trajet est à "+times[i][i+1]);
+                resultList.add(i+1, retainedList.size());
+                tempsTotal = 0;
+            }else{
+                tempsTotal += times[i][i+1];
+            }
+        }
+        return resultList;
+    }
 }
