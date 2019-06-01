@@ -79,14 +79,19 @@ public class NeighborHeuristic implements IHeuristics {
         }
         
         Double[][] distances = this.spots.getDistances();
+        List<Integer> bestList;
 
         List<Integer> tmpList = getBestNeighbor(listToParse);
-        List<Integer> bestList = new ArrayList<>(tmpList);
-
-        while(tmpList != null){
+        if (tmpList != null){
             bestList = new ArrayList<>(tmpList);
-            tmpList = getBestNeighbor(tmpList);
 
+            while(tmpList != null){
+                bestList = new ArrayList<>(tmpList);
+                tmpList = getBestNeighbor(tmpList);
+
+            }
+        }else{
+            bestList = new ArrayList<>(listToParse);
         }
 
         bestList = SpotUtil.AddRechargeStops(distances, bestList, instance.getMaxDist());
@@ -295,7 +300,7 @@ public class NeighborHeuristic implements IHeuristics {
 
         List<Integer> list = null;
         try {
-            list = neighbor_Distances_First_Pick((defaultList));
+            //list = neighbor_Distances_First_Pick((defaultList));
             list = neighbor_Distances_Best_Pick(defaultList);
         } catch (Exception e) {
             e.printStackTrace();

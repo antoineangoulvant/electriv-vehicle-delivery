@@ -28,7 +28,7 @@ public class HeuristicsFactory {
             case NonDeterministicHeuristic:
                 return new NonDeterministicHeuristic(instance, spots);
             default:
-                throw new IllegalArgumentException("Unknow heuristic");
+                throw new IllegalArgumentException("Unknown heuristic");
         }
     }
 }
