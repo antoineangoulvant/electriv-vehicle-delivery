@@ -41,6 +41,7 @@ public class Spots {
         this.demands = importDemands(assetPath);
 
         this.customers = generateCustomers();
+        this.warehouse = generateWarehouse();
     }
 
     /**
@@ -95,6 +96,18 @@ public class Spots {
         }
 
         return customers;
+    }
+
+    /**
+     * Méthode permettant de générer l'entrepôt avec ses informations
+     * @return point de l'entrepôt
+     */
+    private Spot generateWarehouse(){
+        Spot temp = new Spot();
+        temp.setId(coords.length - 1);
+        temp.setX(coords[temp.getId()][0]);
+        temp.setY(coords[temp.getId()][1]);
+        return temp;
     }
 
     public String toString() {
