@@ -4,6 +4,7 @@ import fr.uga.project.electricvehicledelivery.domain.*;
 import fr.uga.project.electricvehicledelivery.utils.Constants;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,11 @@ public class DeterministicHeuristic implements IHeuristics {
     private List<Customer> customersIdToDeliver;
 
     /**
+     * Liste des camions
+     */
+    private List<Truck> trucks;
+
+    /**
      * Constructeur de l'heuristique
      * @param instance caractéristiques de l'instance
      * @param spots points de l'instance
@@ -37,6 +43,7 @@ public class DeterministicHeuristic implements IHeuristics {
         this.instance = instance;
         this.spots = spots;
         this.customersIdToDeliver = this.spots.getCustomers();
+        this.trucks = new ArrayList<>();
     }
 
     @Override
@@ -62,6 +69,13 @@ public class DeterministicHeuristic implements IHeuristics {
                         actualSpot = tempCustomer;
                         actualTruck.addToPlanning(Integer.toString(tempCustomer.getId()));
                         this.customersIdToDeliver.remove(tempCustomer);
+                    } else {
+                        this.trucks.add(actualTruck);
+                        actualTruck = new Truck();
+                        actualCharge = 0;
+                        actualDistance = 0.0;
+                        actualDuration = 0;
+                        actualSpot = spots.getWarehouse();
                     }
                 } else {
                     actualTruck.addToPlanning(Constants.BATTERY_LOADING);
@@ -79,9 +93,9 @@ public class DeterministicHeuristic implements IHeuristics {
                 actualCharge = 0;
             }
         }
-        actualTruck.addToPlanning(Constants.TRUCK_LOADING);
+        this.trucks.add(actualTruck);
 
-        System.out.println("Planning : " + actualTruck.getDeliveryPlanning());
+        this.trucks.stream().map(Truck::getDeliveryPlanning).forEach(System.out::println);
     }
 
     /**
@@ -105,7 +119,6 @@ public class DeterministicHeuristic implements IHeuristics {
                 nearestDist = this.spots.getDistances()[spotId][i];
             }
         }
-        System.out.println(new Pair<>(nearestId, nearestDist));
         return new Pair<>(nearestId, nearestDist);
     }
 }
