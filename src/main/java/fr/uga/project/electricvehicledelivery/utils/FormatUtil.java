@@ -9,7 +9,7 @@ public class FormatUtil {
      * @param seconds temps en seconde
      * @return temps formatté
      */
-    private static String formatTime(int seconds){
+    public static String formatTime(int seconds){
         int hours = seconds / 3600;
         int minutes = (seconds / 60)-(hours*60);
         int secondsLeft = seconds - (hours*3600) - (minutes*60);
