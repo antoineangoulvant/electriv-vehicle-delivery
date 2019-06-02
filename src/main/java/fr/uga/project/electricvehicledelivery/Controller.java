@@ -1,6 +1,7 @@
 package fr.uga.project.electricvehicledelivery;
 
 import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
+import fr.uga.project.electricvehicledelivery.domain.Solution;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
 import fr.uga.project.electricvehicledelivery.heuristics.*;
 import fr.uga.project.electricvehicledelivery.utils.Constants;
@@ -38,7 +39,10 @@ public class Controller {
         Arrays.stream(HeuristicsEnum.values()).forEach(h -> {
             if(heuristic.equals(h.toString())){
                 IHeuristics temp = HeuristicsFactory.getHeuristic(h, this.instanceSpecifications, this.spots);
-                temp.run();
+                Solution result = temp.run();
+                if(result != null){
+                    result.save(h.toString());
+                }
             }
         });
     }

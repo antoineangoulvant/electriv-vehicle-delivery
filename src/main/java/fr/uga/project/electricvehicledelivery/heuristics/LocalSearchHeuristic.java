@@ -1,6 +1,7 @@
 package fr.uga.project.electricvehicledelivery.heuristics;
 
 import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
+import fr.uga.project.electricvehicledelivery.domain.Solution;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
 
 /**
@@ -15,7 +16,7 @@ public class LocalSearchHeuristic implements IHeuristics {
     }
 
     @Override
-    public void run() {
-
+    public Solution run() {
+        return null;
     }
 }

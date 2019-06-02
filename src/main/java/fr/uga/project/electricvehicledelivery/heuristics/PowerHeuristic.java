@@ -1,6 +1,7 @@
 package fr.uga.project.electricvehicledelivery.heuristics;
 
 import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
+import fr.uga.project.electricvehicledelivery.domain.Solution;
 import fr.uga.project.electricvehicledelivery.domain.SpotLink;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
 import fr.uga.project.electricvehicledelivery.utils.SortUtil;
@@ -47,7 +48,7 @@ public class PowerHeuristic implements IHeuristics {
                 .orElse(SpotLink.DEFAULT());
     }
 
-    public void run(){
+    public Solution run(){
         // TODO : times
 
         int currentCapacity = 0;
@@ -57,6 +58,7 @@ public class PowerHeuristic implements IHeuristics {
         ArrayList<Integer> spotAlreadyShipped = new ArrayList<>();
 
         compute(demands, currentCapacity, currentSpot, currentDistance, spotAlreadyShipped);
+        return null;
     }
 
     private void compute(ArrayList<Integer> demands, int currentCapacity, int currentSpot, float currentDistance, ArrayList<Integer> spotAlreadyShipped) {

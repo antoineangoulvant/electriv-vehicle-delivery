@@ -1,6 +1,7 @@
 package fr.uga.project.electricvehicledelivery.heuristics;
 
 import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
+import fr.uga.project.electricvehicledelivery.domain.Solution;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
 import fr.uga.project.electricvehicledelivery.utils.FileUtil;
 import fr.uga.project.electricvehicledelivery.utils.SpotUtil;
@@ -342,7 +343,7 @@ public class NeighborHeuristic implements IHeuristics {
     //endregion
 
 
-    public void run() {
+    public Solution run() {
 
         // Working with distances
         //Double[][] tab = removeWareHouse_Double();
@@ -370,5 +371,7 @@ public class NeighborHeuristic implements IHeuristics {
         matrixToSave.add(list);
         List<List<String>> strList = FileUtil.AddWarepointSpot(matrixToSave);
         FileUtil.WriteCompleteTravel(strList, "neighbor-"+ UUID.randomUUID() +".txt");
+
+        return null;
     }
 }

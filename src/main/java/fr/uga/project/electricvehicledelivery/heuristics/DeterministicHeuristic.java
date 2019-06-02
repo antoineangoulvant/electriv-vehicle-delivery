@@ -47,7 +47,7 @@ public class DeterministicHeuristic implements IHeuristics {
     }
 
     @Override
-    public void run() {
+    public Solution run() {
         Spot actualSpot = spots.getWarehouse();
         Truck actualTruck = new Truck();
         int actualCharge = 0;
@@ -106,11 +106,12 @@ public class DeterministicHeuristic implements IHeuristics {
         this.trucks.add(actualTruck);
 
         Solution solution = new Solution(this.trucks);
-        solution.save(this.getClass().getSimpleName());
 
         System.out.println("Solution :");
         this.trucks.stream().map(Truck::getDeliveryPlanning).forEach(System.out::println);
         System.out.println("Score de la solution : " + solution.evaluate());
+
+        return solution;
     }
 
     /**
