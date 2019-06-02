@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * Heuristique déterministe permettant de proposer une solution
- *
+ * Répond à la question
  * @author Antoine Angoulvant - Andréas Dedieu Meille
  */
 public class DeterministicHeuristic implements IHeuristics {
@@ -27,7 +27,7 @@ public class DeterministicHeuristic implements IHeuristics {
     /**
      * Liste des clients restants
      */
-    private List<Customer> customersIdToDeliver;
+    private List<Integer> customersIdToDeliver;
 
     /**
      * Liste des camions
@@ -42,7 +42,7 @@ public class DeterministicHeuristic implements IHeuristics {
     DeterministicHeuristic(InstanceSpecifications instance, Spots spots) {
         this.instance = instance;
         this.spots = spots;
-        this.customersIdToDeliver = this.spots.getCustomers();
+        this.customersIdToDeliver = this.spots.getCustomers().stream().map(Customer::getId).collect(Collectors.toList());
         this.trucks = new ArrayList<>();
     }
 
@@ -74,7 +74,7 @@ public class DeterministicHeuristic implements IHeuristics {
                         actualTruck.addToDuration(spots.getTimes()[actualSpot.getId()][tempPair.getKey()]
                                 + tempCustomer.getDeliveryDuration());
 
-                        this.customersIdToDeliver.remove(tempCustomer);
+                        this.customersIdToDeliver.remove(this.customersIdToDeliver.indexOf(tempCustomer.getId()));
                     } else {
                         this.trucks.add(actualTruck);
                         actualTruck = new Truck();
@@ -108,7 +108,7 @@ public class DeterministicHeuristic implements IHeuristics {
         Solution solution = new Solution(this.trucks);
         solution.save(this.getClass().getSimpleName());
 
-        System.out.println("Solution : \n");
+        System.out.println("Solution :");
         this.trucks.stream().map(Truck::getDeliveryPlanning).forEach(System.out::println);
         System.out.println("Score de la solution : " + solution.evaluate());
     }
@@ -120,16 +120,15 @@ public class DeterministicHeuristic implements IHeuristics {
      * @return id du point le plus proche
      */
     private Pair<Integer,Double> findNearestSpotFromSpot(int spotId) {
-        List<Integer> ids = customersIdToDeliver.stream().map(Customer::getId).collect(Collectors.toList());
         int nearestId = -1;
         Double nearestDist = -1.0;
-        for(Integer i : ids){
+        for(Integer i : customersIdToDeliver){
             if (nearestDist == -1.0) {
                 nearestId = i;
                 nearestDist = this.spots.getDistances()[spotId][i];
             }
             if (this.spots.getDistances()[spotId][i] < nearestDist
-                    && i != spotId && ids.indexOf(i) != -1) {
+                    && i != spotId && customersIdToDeliver.indexOf(i) != -1) {
                 nearestId = i;
                 nearestDist = this.spots.getDistances()[spotId][i];
             }

@@ -4,7 +4,6 @@ import fr.uga.project.electricvehicledelivery.heuristics.HeuristicsEnum;
 import fr.uga.project.electricvehicledelivery.utils.FileUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -67,7 +66,7 @@ public class Solution {
 
     /**
      * Méthode permettant d'appeler la méthode de sauvegarde de la solution dans un fichier txt
-     * @param fileName
+     * @param fileName nom du ficher
      */
     public void save(String fileName){
         FileUtil.saveSolution(this, fileName);

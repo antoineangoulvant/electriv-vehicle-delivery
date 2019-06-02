@@ -17,8 +17,6 @@ public class HeuristicsFactory {
      */
     public static IHeuristics getHeuristic(HeuristicsEnum enumHeuristics, InstanceSpecifications instance, Spots spots){
         switch (enumHeuristics) {
-            case PowerHeuristics:
-                return new PowerHeuristic(instance, spots);
             case NeighborHeuristics:
                 return new NeighborHeuristic(instance, spots);
             case LocalSearchHeuristic:

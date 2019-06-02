@@ -5,7 +5,6 @@ package fr.uga.project.electricvehicledelivery.heuristics;
  * @author Antoine Angoulvant - Andréas Dedieu Meille
  */
 public enum HeuristicsEnum {
-    PowerHeuristics,
     NeighborHeuristics,
     LocalSearchHeuristic,
     DeterministicHeuristic,

@@ -60,7 +60,7 @@ public class FileUtil {
             try (FileWriter fw = new FileWriter(filePath, true);
                  BufferedWriter bw = new BufferedWriter(fw);
                  PrintWriter out = new PrintWriter(bw)) {
-                out.println(subList);
+                out.println(subList.stream().collect(Collectors.joining(",")));
 
             } catch (IOException e) {
                 e.printStackTrace();
