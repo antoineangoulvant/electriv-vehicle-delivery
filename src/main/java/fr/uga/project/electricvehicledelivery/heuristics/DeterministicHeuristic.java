@@ -66,8 +66,14 @@ public class DeterministicHeuristic implements IHeuristics {
                         actualDistance += tempPair.getValue();
                         actualDuration += spots.getTimes()[actualSpot.getId()][tempPair.getKey()]
                                 + tempCustomer.getDeliveryDuration();
+
                         actualSpot = tempCustomer;
+
                         actualTruck.addToPlanning(Integer.toString(tempCustomer.getId()));
+                        actualTruck.addToDistance(tempPair.getValue());
+                        actualTruck.addToDuration(spots.getTimes()[actualSpot.getId()][tempPair.getKey()]
+                                + tempCustomer.getDeliveryDuration());
+
                         this.customersIdToDeliver.remove(tempCustomer);
                     } else {
                         this.trucks.add(actualTruck);
@@ -79,23 +85,32 @@ public class DeterministicHeuristic implements IHeuristics {
                     }
                 } else {
                     actualTruck.addToPlanning(Constants.BATTERY_LOADING);
-                    // Temps pour rentrer au dépot
-                    actualDuration += spots.getTimes()[tempCustomer.getId()][spots.getWarehouse().getId()];
-                    // Temps de recharge, on considère que l'on utilise toujours la recharge rapide
-                    actualDuration += instance.getChargeFast() * 60;
+                    int durationToAdd = spots.getTimes()[tempCustomer.getId()][spots.getWarehouse().getId()]
+                            + instance.getChargeFast() * 60;
+                    // Temps pour rentrer au dépot et pour recharger avec la recharge rapide
+                    actualDuration += durationToAdd ;
                     actualDistance = 0.0;
 
+                    actualTruck.addToDistance(spots.getDistances()[tempCustomer.getId()][spots.getWarehouse().getId()]);
+                    actualTruck.addToDuration(durationToAdd);
                 }
             } else {
                 actualTruck.addToPlanning(Constants.TRUCK_LOADING);
                 actualDuration += spots.getTimes()[tempCustomer.getId()][spots.getWarehouse().getId()];
                 actualSpot = spots.getWarehouse();
+                actualTruck.addToDuration(spots.getTimes()[tempCustomer.getId()][spots.getWarehouse().getId()]);
+                actualTruck.addToDistance(spots.getDistances()[tempCustomer.getId()][spots.getWarehouse().getId()]);
                 actualCharge = 0;
             }
         }
         this.trucks.add(actualTruck);
 
+        Solution solution = new Solution(this.trucks);
+        solution.save(this.getClass().getSimpleName());
+
+        System.out.println("Solution : \n");
         this.trucks.stream().map(Truck::getDeliveryPlanning).forEach(System.out::println);
+        System.out.println("Score de la solution : " + solution.evaluate());
     }
 
     /**
