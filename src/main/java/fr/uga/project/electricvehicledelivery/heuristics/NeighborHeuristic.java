@@ -21,7 +21,7 @@ public class NeighborHeuristic implements IHeuristics {
         this.spots = spots;
     }
 
-    //region NeighborHeuristic_FirstPick
+    //region NeighborHeuristic_FirstPick_Distances
     private List<Integer> neighbor_Distances_First_Pick (List<Integer> listToParse) throws Exception {
 
         if (listToParse == null || listToParse.size() == 0){
@@ -30,12 +30,12 @@ public class NeighborHeuristic implements IHeuristics {
         
         Double[][] distances = this.spots.getDistances();
 
-        List<Integer> firstList = getFirstNeighbor(listToParse);
+        List<Integer> firstList = getFirstNeighbor_Distances(listToParse);
         List<Integer> retainedList = new ArrayList<>(firstList);
 
         while(firstList != null){
             retainedList = new ArrayList<>(firstList);
-            firstList = getFirstNeighbor(firstList);
+            firstList = getFirstNeighbor_Distances(firstList);
 
         }
 
@@ -43,7 +43,7 @@ public class NeighborHeuristic implements IHeuristics {
         return retainedList;
     }
 
-    private List<Integer> getFirstNeighbor(List<Integer> currentList) {
+    private List<Integer> getFirstNeighbor_Distances(List<Integer> currentList) {
         Double[][] distances = this.spots.getDistances();
         float defaultValue = getOptimisedValue(distances, currentList), pretendValue;
 
@@ -71,7 +71,7 @@ public class NeighborHeuristic implements IHeuristics {
 
     //endregion
 
-    // region NeighbotHeuristic_BestPick
+    // region NeighborHeuristic_BestPick_Distances
     private List<Integer> neighbor_Distances_Best_Pick(List<Integer> listToParse) throws Exception {
 
         if (listToParse == null || listToParse.size() == 0){
@@ -81,13 +81,13 @@ public class NeighborHeuristic implements IHeuristics {
         Double[][] distances = this.spots.getDistances();
         List<Integer> bestList;
 
-        List<Integer> tmpList = getBestNeighbor(listToParse);
+        List<Integer> tmpList = getBestNeighbor_Distances(listToParse);
         if (tmpList != null){
             bestList = new ArrayList<>(tmpList);
 
             while(tmpList != null){
                 bestList = new ArrayList<>(tmpList);
-                tmpList = getBestNeighbor(tmpList);
+                tmpList = getBestNeighbor_Distances(tmpList);
 
             }
         }else{
@@ -98,7 +98,7 @@ public class NeighborHeuristic implements IHeuristics {
         return bestList;
     }
 
-    private List<Integer> getBestNeighbor(List<Integer> currentList) {
+    private List<Integer> getBestNeighbor_Distances(List<Integer> currentList) {
 
         Double[][] distances = this.spots.getDistances();
         float defaultValue = getOptimisedValue(distances, currentList), pretendValue;
@@ -129,68 +129,116 @@ public class NeighborHeuristic implements IHeuristics {
         return currentBestList;
     }
 
-    //endregion
+    //endregion_Distances
 
-    //region TODO
-    /**
-     * TODO !
-     * @param times
-     * @return
-     */
-    public List<Integer> neighbor_Times_Optimised(Integer[][] times){
-        times = removeWareHouse_Int(times);
-        int mainIndex=0, floatingIndex=0;
-        float pretendValue;
-        List<Integer> optimisedList = new ArrayList<>();
-        List<Integer> currentList = buildDefaultList(times);
-        float optimisedValue = getOptimisedValue(times, currentList);
-        do {
-            if (mainIndex==floatingIndex){
-                floatingIndex++;
-                if (floatingIndex >= currentList.size()){
-                    break;
-                }else{
-                    continue;
-                }
+    //region NeighborHeuristic_FirstPick_Times
 
-            }
-            // swap
-            swap(mainIndex, floatingIndex, currentList);
+    private List<Integer> neighbor_Times_First_Pick (List<Integer> listToParse) throws Exception {
 
-            // compute optimised value
-            pretendValue = getOptimisedValue(times, currentList);
-            System.out.println("Array : "+currentList.toString()+"\nPretendValue : "+pretendValue+"\n OptimisedValue : "+optimisedValue+"\nmainIndex : "+mainIndex+"\nfloatingIndex : "+floatingIndex+"\n");
-            if (pretendValue < optimisedValue){
-                optimisedValue = pretendValue;
-                optimisedList = currentList;
+        if (listToParse == null || listToParse.size() == 0){
+            throw new Exception("ListToParse is null or Empty");
+        }
 
-                // reset values
-                mainIndex = 0;
-                floatingIndex = 1;
-                System.out.println(">> OptimisedValue = "+optimisedValue+", resetting mainIndex and floatingIndex\n");
-            }else{
-                swap(floatingIndex, mainIndex, currentList);
-                if (floatingIndex == currentList.size()-1){
-                    mainIndex++;
-                    floatingIndex = 0;
-                }else{
-                    floatingIndex++;
-                }
-            }
-        }while (mainIndex < currentList.size());
+        Integer[][] times = this.spots.getTimes();
 
-        System.out.println("Done. Optimised List : "+optimisedList.toString());
-        return optimisedList;
+        List<Integer> firstList = getFirstNeighbor_Times(listToParse);
+        List<Integer> retainedList = new ArrayList<>(firstList);
+
+        while(firstList != null){
+            retainedList = new ArrayList<>(firstList);
+            firstList = getFirstNeighbor_Times(firstList);
+
+        }
+
+        retainedList = SpotUtil.AddMultipleDays(times, retainedList, instance.getEndTimeToSeconds());
+        return retainedList;
     }
 
-    public <T> Integer[][] removeWareHouse_Int(T[][] matrix) {
-        Integer[][] tmp = new Integer[matrix.length-1][matrix[0].length-1];
-        for (int i = 0; i <= matrix.length-2; i++){
-            for (int y = 0; y <= matrix.length-2; y++){
-                tmp[i][y] = (Integer) matrix[i][y];
+    private List<Integer> getFirstNeighbor_Times(List<Integer> currentList) {
+        Integer[][] times = this.spots.getTimes();
+        float defaultValue = getOptimisedValue(times, currentList), pretendValue;
+
+        for (int i = 0; i+1 < currentList.size(); i++){
+            swap(i, i+1, currentList);
+
+            pretendValue = getOptimisedValue(times, currentList);
+
+
+            if (pretendValue < defaultValue){
+                System.out.println("Array : "+currentList.toString()+"\nPretendValue : "+pretendValue+"\n OptimisedValue : "+defaultValue+"\nPosition in Array : "+i+"\n");
+
+                System.out.println(" >> Adding list \n");
+
+                return currentList;
             }
+
+            swap(i, i+1, currentList);
+
         }
-        return tmp;
+
+        return null;
+
+    }
+
+    //endregion
+
+    //region NeighborHeuristic_BestPick_Times
+
+    private List<Integer> neighbor_Times_Best_Pick(List<Integer> listToParse) throws Exception {
+
+        if (listToParse == null || listToParse.size() == 0){
+            throw new Exception("ListToParse is null or Empty");
+        }
+
+        Integer[][] times = this.spots.getTimes();
+        List<Integer> bestList;
+
+        List<Integer> tmpList = getBestNeighbor_Times(listToParse);
+        if (tmpList != null){
+            bestList = new ArrayList<>(tmpList);
+
+            while(tmpList != null){
+                bestList = new ArrayList<>(tmpList);
+                tmpList = getBestNeighbor_Times(tmpList);
+
+            }
+        }else{
+            bestList = new ArrayList<>(listToParse);
+        }
+
+        bestList = SpotUtil.AddMultipleDays(times, bestList, instance.getEndTimeToSeconds());
+        return bestList;
+    }
+
+    private List<Integer> getBestNeighbor_Times(List<Integer> currentList) {
+
+        Integer[][] times = this.spots.getTimes();
+        float defaultValue = getOptimisedValue(times, currentList), pretendValue;
+        List<Integer> currentBestList = new ArrayList<>();
+
+        for (int i = 0; i+1 < currentList.size(); i++){
+            swap(i, i+1, currentList);
+
+            pretendValue = getOptimisedValue(times, currentList);
+
+
+            if (pretendValue < defaultValue){
+                System.out.println("Array : "+currentList.toString()+"\nPretendValue : "+pretendValue+"\n OptimisedValue : "+defaultValue+"\nPosition in Array : "+i+"\n");
+                System.out.println(" >> Adding list \n");
+
+                defaultValue = pretendValue;
+                currentBestList = new ArrayList<>(currentList);
+            }
+
+            swap(i, i+1, currentList);
+
+        }
+
+        if (currentBestList.size() == 0){
+            return null;
+        }
+
+        return currentBestList;
     }
 
     //endregion
@@ -295,13 +343,22 @@ public class NeighborHeuristic implements IHeuristics {
 
 
     public void run() {
-        Double[][] distancesWithoutWare = removeWareHouse_Double();
-        List<Integer> defaultList = buildDefaultList(distancesWithoutWare);
+
+        // Working with distances
+        //Double[][] tab = removeWareHouse_Double();
+
+        // Working with times
+        Integer[][] tab = this.spots.getTimes();
+
+
+        List<Integer> defaultList = buildDefaultList(tab);
 
         List<Integer> list = null;
         try {
             //list = neighbor_Distances_First_Pick((defaultList));
-            list = neighbor_Distances_Best_Pick(defaultList);
+            //list = neighbor_Distances_Best_Pick(defaultList);
+            //list = neighbor_Times_First_Pick(defaultList);
+            list = neighbor_Times_Best_Pick(defaultList);
         } catch (Exception e) {
             e.printStackTrace();
         }
