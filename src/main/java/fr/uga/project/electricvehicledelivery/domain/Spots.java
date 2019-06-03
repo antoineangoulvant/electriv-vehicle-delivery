@@ -1,6 +1,7 @@
 package fr.uga.project.electricvehicledelivery.domain;
 
 import fr.uga.project.electricvehicledelivery.utils.ImportUtils;
+import javafx.util.Pair;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -109,6 +110,27 @@ public class Spots {
         temp.setX(coords[temp.getId()][0]);
         temp.setY(coords[temp.getId()][1]);
         return temp;
+    }
+
+    /**
+     * Méthode permettant de retourner les coordonnées du client à partir de son id
+     * @param id du client
+     * @return Pair contenant les coordonnées x et y
+     */
+    public Pair<Double,Double> getCustomerCoordinate(int id){
+        Customer customer = this.customers.stream().filter(c -> c.getId()==id).findFirst().orElse(null);
+        if(customer == null){
+            throw new IllegalArgumentException("L'id ne correspond à aucun client");
+        }
+        return new Pair<Double, Double>(customer.getX(),customer.getY());
+    }
+
+    /**
+     * Méthode retournant les coordonnées de l'entrepôt
+     * @return Pair contenant les coordonnées x et y
+     */
+    public Pair<Double,Double> getWarehouseCoordinate(){
+        return new Pair<Double, Double>(this.warehouse.getX(), this.warehouse.getY());
     }
 
     public String toString() {

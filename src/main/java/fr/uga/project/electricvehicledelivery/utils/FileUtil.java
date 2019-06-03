@@ -1,7 +1,11 @@
 package fr.uga.project.electricvehicledelivery.utils;
 
 import fr.uga.project.electricvehicledelivery.domain.Solution;
+import fr.uga.project.electricvehicledelivery.domain.Spots;
 import fr.uga.project.electricvehicledelivery.domain.Truck;
+import javafx.util.Pair;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -68,6 +72,11 @@ public class FileUtil {
         }
     }
 
+    /**
+     * Méthode permettant de sauvegarder les résultats d'une heuristique dans un fichier txt
+     * @param solution résultat de l'heuristique
+     * @param fileName nom du fichier
+     */
     public static void saveSolution(Solution solution, String fileName) {
         if (fileName == "") throw new IllegalArgumentException("Le nom de fichier ne peut pas être vide");
 
@@ -81,6 +90,56 @@ public class FileUtil {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Méthode permettant de sauvegarder la solution sous format JSON qui pourrait être utilisé
+     * sur la page situé sur l'URL energie.antoine-angoulvant.fr
+     * @param solution solution de l'heuristique
+     * @param filename nom du fichier
+     * @param spots points de l'instances
+     */
+    public static void saveSolutionAsJson(Solution solution, String filename, Spots spots) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+
+            /** Liste des camions */
+            JSONArray trucksArray = new JSONArray();
+            for(Truck truck : solution.getTrucksList()){
+                JSONObject truckObject = new JSONObject();
+                JSONArray deliveryArray = new JSONArray();
+                for(String id : truck.getDeliveryPlanning()){
+                    JSONObject object = new JSONObject();
+                    object.put("id",id);
+                    Pair<Double,Double> coordinate;
+                    if(id.equals("C") || id.equals("R")){
+                        coordinate = spots.getWarehouseCoordinate();
+                    } else {
+                        coordinate = spots.getCustomerCoordinate(Integer.parseInt(id));
+                    }
+                    object.put("x",coordinate.getKey());
+                    object.put("y",coordinate.getValue());
+                    deliveryArray.add(object);
+                }
+                truckObject.put("Spots", deliveryArray);
+                trucksArray.add(truckObject);
+            }
+            jsonObject.put("Trucks", trucksArray);
+
+            Pair<Double,Double> coordinate = spots.getWarehouseCoordinate();
+            JSONObject warehouse = new JSONObject();
+            warehouse.put("x", coordinate.getKey());
+            warehouse.put("y", coordinate.getValue());
+            jsonObject.put("Warehouse", warehouse);
+
+            String filePath = Constants.RESULTS_FOLDER_PATH + "JSON/" + filename + "-" + UUID.randomUUID() + ".json";
+
+            FileWriter fileWriter = new FileWriter(filePath, true);
+            fileWriter.write(jsonObject.toJSONString());
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

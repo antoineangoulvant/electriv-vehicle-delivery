@@ -5,6 +5,7 @@ import fr.uga.project.electricvehicledelivery.domain.Solution;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
 import fr.uga.project.electricvehicledelivery.heuristics.*;
 import fr.uga.project.electricvehicledelivery.utils.Constants;
+import fr.uga.project.electricvehicledelivery.utils.FileUtil;
 import fr.uga.project.electricvehicledelivery.utils.ImportUtils;
 import fr.uga.project.electricvehicledelivery.view.GUI;
 import lombok.Getter;
@@ -42,6 +43,7 @@ public class Controller {
                 Solution result = temp.run();
                 if(result != null){
                     result.save(h.toString());
+                    FileUtil.saveSolutionAsJson(result, h.toString(), spots);
                 }
             }
         });
