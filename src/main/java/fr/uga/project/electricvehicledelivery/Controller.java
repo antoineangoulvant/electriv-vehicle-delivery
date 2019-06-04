@@ -21,6 +21,7 @@ import java.util.Arrays;
 public class Controller {
     private InstanceSpecifications instanceSpecifications;
     private Spots spots;
+    private GUI gui;
 
     private Controller() {
         /** SORTING TESTING**/
@@ -29,7 +30,7 @@ public class Controller {
          ArrayList<SpotLink<Float>> toto = util.sortMatrix(spot.get_distances());
          ArrayList<SpotLink<Integer>> tata = util.sortMatrix(spot.get_times());
          **/
-        new GUI(this);
+        this.gui = new GUI(this);
     }
 
     /**
@@ -37,16 +38,20 @@ public class Controller {
      * @param heuristic heuristique à lancer
      */
     public void launchHeuristic(String heuristic){
-        Arrays.stream(HeuristicsEnum.values()).forEach(h -> {
-            if(heuristic.equals(h.toString())){
-                IHeuristics temp = HeuristicsFactory.getHeuristic(h, this.instanceSpecifications, this.spots);
-                Solution result = temp.run();
-                if(result != null){
-                    result.save(h.toString());
-                    FileUtil.saveSolutionAsJson(result, h.toString(), spots);
+        if(this.spots == null && instanceSpecifications == null){
+            gui.error();
+        } else {
+            Arrays.stream(HeuristicsEnum.values()).forEach(h -> {
+                if(heuristic.equals(h.toString())){
+                    IHeuristics temp = HeuristicsFactory.getHeuristic(h, this.instanceSpecifications, this.spots);
+                    Solution result = temp.run();
+                    if(result != null){
+                        result.save(h.toString());
+                        FileUtil.saveSolutionAsJson(result, h.toString(), spots);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     /**

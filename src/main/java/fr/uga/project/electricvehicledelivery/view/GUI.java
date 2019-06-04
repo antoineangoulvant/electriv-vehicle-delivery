@@ -87,4 +87,13 @@ public class GUI extends JFrame implements ActionListener {
             }
        });
     }
+
+    /**
+     * Méthode permettant d'ouvrir une popup d'erreur dans le cas où il n'y a pas d'instance sélectionnée
+     */
+    public void error(){
+        JOptionPane.showMessageDialog(this, "Aucune instance sélectionnée\nVeuillez" +
+                " sélectionner une instance avant de lancer une heuristique","Erreur de lancement",
+                JOptionPane.ERROR_MESSAGE);
+    }
 }
