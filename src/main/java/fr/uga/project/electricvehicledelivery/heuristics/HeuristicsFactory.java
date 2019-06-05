@@ -19,8 +19,8 @@ public class HeuristicsFactory {
         switch (enumHeuristics) {
             case NeighborHeuristics:
                 return new NeighborHeuristic(instance, spots);
-            case LocalSearchHeuristic:
-                return new LocalSearchHeuristic(instance, spots);
+            case SteepestDescentDeterministicHeuristic:
+                return new SteepestDescentDeterministicHeuristic(instance, spots);
             case DeterministicHeuristic:
                 return new DeterministicHeuristic(instance, spots);
             case NonDeterministicHeuristic:

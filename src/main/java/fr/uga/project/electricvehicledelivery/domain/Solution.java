@@ -71,4 +71,44 @@ public class Solution {
     public void save(String fileName){
         FileUtil.saveSolution(this, fileName);
     }
+
+    /**
+     * Méthode permettant de mettre à jour la distance et la durée totale des livraisons d'un camion
+     * afin de pouvoir réévaluer la solution
+     * @param spots liste de points de l'instance
+     */
+    public void updateDistanceAndDuration(Spots spots) {
+        Spot actualSpot = null;
+        for(Truck truck : trucksList){
+            System.out.println("Start distance : " + truck.getDistance());
+            System.out.println("Start duration : " + truck.getDuration());
+            int duration = 0;
+            double distance = 0;
+            for(String id : truck.getDeliveryPlanning()){
+                if(actualSpot == null){
+                    if(id.equals("C") || id.equals("R")){
+                        actualSpot = spots.getWarehouse();
+                    } else {
+                        actualSpot = spots.getCustomers().stream().filter(c ->
+                                c.getId() == Integer.parseInt(id)).findFirst().orElse(null);
+                    }
+                } else {
+                    Spot tempSpot = null;
+                    if(id.equals("C") || id.equals("R")){
+                        tempSpot = spots.getWarehouse();
+                    } else {
+                        tempSpot = spots.getCustomers().stream().filter(c ->
+                                c.getId() == Integer.parseInt(id)).findFirst().orElse(null);
+                    }
+                    distance += spots.getDistances()[actualSpot.getId()][tempSpot.getId()];
+                    duration += spots.getTimes()[actualSpot.getId()][tempSpot.getId()];
+                    actualSpot = tempSpot;
+                }
+            }
+            truck.setDuration(duration);
+            truck.setDistance(distance);
+            System.out.println("New distance : " + truck.getDistance());
+            System.out.println("New duration : " + truck.getDuration());
+        }
+    }
 }

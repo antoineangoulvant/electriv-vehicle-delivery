@@ -6,7 +6,8 @@ package fr.uga.project.electricvehicledelivery.heuristics;
  */
 public enum HeuristicsEnum {
     NeighborHeuristics,
-    LocalSearchHeuristic,
+    SteepestDescentDeterministicHeuristic,
+    SteepestDescentNonDeterministicHeuristic,
     DeterministicHeuristic,
     NonDeterministicHeuristic
 }

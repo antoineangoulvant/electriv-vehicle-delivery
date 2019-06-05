@@ -21,7 +21,7 @@ public class DeterministicHeuristic implements IHeuristics {
      */
     private InstanceSpecifications instance;
     /**
-     * Clients et entrepôts de l'instance
+     * Clients et entrepôt de l'instance
      */
     private Spots spots;
     /**
