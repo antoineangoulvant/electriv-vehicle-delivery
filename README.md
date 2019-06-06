@@ -11,3 +11,5 @@ Pour exécuter **il est nécessaire d'installer le JDK 8 ainsi que Gradle** (Pen
 Une procédure d'installation plus détaillée est disponible dans la documentation.
 
 Il suffit ensuite d'exécuter le main du controleur. Une fois lancé une fenêtre apparait, il faut sélectionner une instance (Attention au lancement aucune instance n'est sélectionné) et sélectionner l'heuristique que l'on souhaite exécuter. Les résultats de l'heuristiques sont automatiquement exportés dans le dossier src/main/resources/Results.
+
+La visualisation des données se situe [ICI](http://energie.antoine-angoulvant.fr/)
