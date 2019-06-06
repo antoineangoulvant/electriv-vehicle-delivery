@@ -34,6 +34,14 @@ public class SpotUtil {
         return resultList;
     }
 
+    /**
+     * Ajoute dans le tableau retainedList un point, si jamais les trajets effectués jusqu'à présent dépasse le nombre
+     * secondes disponibles à la journée. Ce point est est int, le size initial de retainedList
+     * @param times
+     * @param retainedList
+     * @param endTimeToSeconds
+     * @return
+     */
     public static List<Integer> AddMultipleDays(Integer[][] times, List<Integer> retainedList, int endTimeToSeconds) {
         float tempsTotal = 0;
         List<Integer> resultList = new ArrayList<>(retainedList);

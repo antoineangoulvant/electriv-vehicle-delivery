@@ -355,13 +355,45 @@ public class NeighbourHeuristic implements IHeuristics {
         List<Integer> defaultList = buildDefaultList(tab);
 
         List<Integer> list = null;
-        try {
-            //list = neighbor_Distances_First_Pick((defaultList));
-            //list = neighbor_Distances_Best_Pick(defaultList);
-            //list = neighbor_Times_First_Pick(defaultList);
-            list = neighbor_Times_Best_Pick(defaultList);
-        } catch (Exception e) {
-            e.printStackTrace();
+        int i = 1;
+        String fileName = "";
+        while (i <= 5){
+
+            try {
+                switch (i) {
+                    case 1:
+                        list = neighbor_Distances_First_Pick((defaultList));
+                        fileName = "distances_first_pick";
+                        break;
+                    case 2:
+                        list = neighbor_Distances_Best_Pick(defaultList);
+                        fileName = "distances_best_pick";
+                        break;
+                    case 3:
+                        list = neighbor_Times_First_Pick(defaultList);
+                        fileName = "times_first_pick";
+                        break;
+                    case 4:
+                        list = neighbor_Times_Best_Pick(defaultList);
+                        fileName = "times_best_pick";
+                        break;
+                    default:
+                        break;
+
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            System.out.println("Best List : \n"+list.toString()+"\n Best Value : "+getOptimisedValue(this.spots.getDistances(), list));
+            fileName = "neighbor-" + fileName + UUID.randomUUID()+".txt";
+            List<List<Integer>> matrixToSave = new ArrayList<>();
+            matrixToSave.add(list);
+            List<List<String>> strList = FileUtil.AddWarepointSpot(matrixToSave);
+            FileUtil.WriteCompleteTravel(strList, fileName);
+
+
+            i++;
         }
 
         System.out.println("Best List : \n"+list.toString()+"\n Best Value : "+getOptimisedValue(this.spots.getDistances(), list));
