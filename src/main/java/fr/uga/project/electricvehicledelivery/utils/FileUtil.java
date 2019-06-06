@@ -31,11 +31,15 @@ public class FileUtil {
      * @return
      */
     public static List<List<String>> AddWarepointSpot(List<List<Integer>> list) {
+        if (list == null)
+            throw new IllegalArgumentException();
         List<List<String>> strList = new ArrayList<>();
 
         for (List<Integer> subList : list) {
             List<String> tmp = new ArrayList<>();
             for (int i = 0; i < subList.size(); i++) {
+                if (subList.get(i) >= subList.size())
+                    throw new IllegalArgumentException("An item from a list is higher than the size of his list");
                 if (subList.get(i) == subList.size() - 1) {
                     tmp.add("R");
                 } else {
