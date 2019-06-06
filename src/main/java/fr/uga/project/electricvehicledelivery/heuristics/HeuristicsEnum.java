@@ -5,7 +5,7 @@ package fr.uga.project.electricvehicledelivery.heuristics;
  * @author Antoine Angoulvant - Andréas Dedieu Meille
  */
 public enum HeuristicsEnum {
-    NeighborHeuristics,
+    NeighbourHeuristics,
     SteepestDescentDeterministicHeuristic,
     SteepestDescentNonDeterministicHeuristic,
     DeterministicHeuristic,

@@ -17,10 +17,12 @@ public class HeuristicsFactory {
      */
     public static IHeuristics getHeuristic(HeuristicsEnum enumHeuristics, InstanceSpecifications instance, Spots spots){
         switch (enumHeuristics) {
-            case NeighborHeuristics:
-                return new NeighborHeuristic(instance, spots);
+            case NeighbourHeuristics:
+                return new NeighbourHeuristic(instance, spots);
             case SteepestDescentDeterministicHeuristic:
                 return new SteepestDescentDeterministicHeuristic(instance, spots);
+            case SteepestDescentNonDeterministicHeuristic:
+                return new SteepestDescentNonDeterministicHeuristic(instance, spots);
             case DeterministicHeuristic:
                 return new DeterministicHeuristic(instance, spots);
             case NonDeterministicHeuristic:

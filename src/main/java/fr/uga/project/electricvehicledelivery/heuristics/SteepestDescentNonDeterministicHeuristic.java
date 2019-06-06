@@ -17,8 +17,14 @@ public class SteepestDescentNonDeterministicHeuristic implements IHeuristics {
      * Clients et entrepôt de l'instance
      */
     private Spots spots;
+    /**
+     * Solution de l'heuristique déterministe
+     */
+    private Solution solution;
 
     public SteepestDescentNonDeterministicHeuristic(InstanceSpecifications instance, Spots spots){
+        NonDeterministicHeuristic heuristic = new NonDeterministicHeuristic(instance, spots);
+        this.solution = heuristic.run();
         this.instance = instance;
         this.spots = spots;
     }

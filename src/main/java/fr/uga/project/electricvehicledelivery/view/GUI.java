@@ -41,8 +41,9 @@ public class GUI extends JFrame implements ActionListener {
         this.assetsList.addActionListener(this);
 
         addWindowListener(wl);
-        setSize(800,400);
+        setSize(1100,300);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         JPanel container = new JPanel();
 

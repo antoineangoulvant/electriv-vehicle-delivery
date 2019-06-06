@@ -51,4 +51,42 @@ public class Truck {
     public void addToDuration(int toAdd){
         this.duration += toAdd;
     }
+
+    public void updateDistanceAndDuration(Spots spots){
+        Spot actualSpot = null;
+        System.out.println("Start distance : " + this.getDistance());
+        System.out.println("Start duration : " + this.getDuration());
+        int duration = 0;
+        double distance = 0;
+        for(String id : this.getDeliveryPlanning()){
+            if(actualSpot == null){
+                if(id.equals("C") || id.equals("R")){
+                    actualSpot = spots.getWarehouse();
+                } else {
+                    actualSpot = spots.getCustomers().stream().filter(c ->
+                            c.getId() == Integer.parseInt(id)).findFirst().orElse(null);
+                    duration += spots.getTimes()[spots.getWarehouse().getId()][actualSpot.getId()] +
+                            ((Customer) actualSpot).getDeliveryDuration();
+                    distance += spots.getDistances()[spots.getWarehouse().getId()][actualSpot.getId()];
+                }
+            } else {
+                Spot tempSpot = null;
+                int deliveryDuration = 0;
+                if(id.equals("C") || id.equals("R")){
+                    tempSpot = spots.getWarehouse();
+                } else {
+                    tempSpot = spots.getCustomers().stream().filter(c ->
+                            c.getId() == Integer.parseInt(id)).findFirst().orElse(null);
+                    deliveryDuration = ((Customer) tempSpot).getDeliveryDuration();
+                }
+                distance += spots.getDistances()[actualSpot.getId()][tempSpot.getId()];
+                duration += spots.getTimes()[actualSpot.getId()][tempSpot.getId()] + deliveryDuration;
+                actualSpot = tempSpot;
+            }
+        }
+        this.setDuration(duration);
+        this.setDistance(distance);
+        System.out.println("New distance : " + this.getDistance());
+        System.out.println("New duration : " + this.getDuration());
+    }
 }

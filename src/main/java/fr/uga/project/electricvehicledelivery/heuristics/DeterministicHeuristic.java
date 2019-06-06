@@ -109,7 +109,7 @@ public class DeterministicHeuristic implements IHeuristics {
 
         System.out.println("Solution :");
         this.trucks.stream().map(Truck::getDeliveryPlanning).forEach(System.out::println);
-        System.out.println("Score de la solution : " + solution.evaluate());
+        solution.updateDistanceAndDuration(this.spots);
 
         return solution;
     }

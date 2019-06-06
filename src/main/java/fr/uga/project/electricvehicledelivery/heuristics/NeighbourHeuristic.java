@@ -12,12 +12,12 @@ import java.util.*;
  * Heuristique pour générer les voisinages
  * @author Antoine Angoulvant - Andréas Dedieu Meille
  */
-public class NeighborHeuristic implements IHeuristics {
+public class NeighbourHeuristic implements IHeuristics {
 
     Spots spots;
     InstanceSpecifications instance;
 
-    public NeighborHeuristic(InstanceSpecifications instance, Spots spots){
+    public NeighbourHeuristic(InstanceSpecifications instance, Spots spots){
         this.instance = instance;
         this.spots = spots;
     }
