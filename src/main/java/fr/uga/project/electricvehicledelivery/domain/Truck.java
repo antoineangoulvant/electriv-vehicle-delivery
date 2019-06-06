@@ -54,8 +54,6 @@ public class Truck {
 
     public void updateDistanceAndDuration(Spots spots){
         Spot actualSpot = null;
-        System.out.println("Start distance : " + this.getDistance());
-        System.out.println("Start duration : " + this.getDuration());
         int duration = 0;
         double distance = 0;
         for(String id : this.getDeliveryPlanning()){
@@ -86,7 +84,5 @@ public class Truck {
         }
         this.setDuration(duration);
         this.setDistance(distance);
-        System.out.println("New distance : " + this.getDistance());
-        System.out.println("New duration : " + this.getDuration());
     }
 }

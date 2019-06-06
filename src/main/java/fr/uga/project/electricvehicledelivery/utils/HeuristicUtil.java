@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe contenant des méthodes de formatages communes
+ * Classe contenant des méthodes communes aux heuristiques
  */
-public class FormatUtil {
+public class HeuristicUtil {
     /**
      * Méthode permettant de formatter un temps en secondes sous un format plus simple à lire
      * @param seconds temps en seconde
@@ -34,6 +34,23 @@ public class FormatUtil {
         toSwap.set(a, toSwap.get(b));
         toSwap.set(b, temp);
         return toSwap;
+    }
+
+    /**
+     * Méthode permettant de pivoter deux éléments dans la liste
+     * @param deliveryList liste à pivoter
+     * @param a id du premier élément à pivoter
+     * @param b id du second élément à pivoter
+     * @return liste pivoté
+     */
+    public static List<String> swapFirstElementDelivery(List<String> deliveryList, int a, int b){
+        if(a > deliveryList.size() || b > deliveryList.size()){
+            throw new IllegalArgumentException("Les id de swap doivent être inférieure à la taille de la liste");
+        }
+        String temp = deliveryList.get(a);
+        deliveryList.set(a, deliveryList.get(b));
+        deliveryList.set(b, temp);
+        return deliveryList;
     }
 
     /**

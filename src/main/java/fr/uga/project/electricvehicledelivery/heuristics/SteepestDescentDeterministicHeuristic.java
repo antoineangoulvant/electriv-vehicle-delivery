@@ -4,9 +4,7 @@ import fr.uga.project.electricvehicledelivery.domain.InstanceSpecifications;
 import fr.uga.project.electricvehicledelivery.domain.Solution;
 import fr.uga.project.electricvehicledelivery.domain.Spots;
 import fr.uga.project.electricvehicledelivery.domain.Truck;
-import fr.uga.project.electricvehicledelivery.utils.FileUtil;
-import fr.uga.project.electricvehicledelivery.utils.FormatUtil;
-import javafx.scene.shape.TriangleMesh;
+import fr.uga.project.electricvehicledelivery.utils.HeuristicUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +38,38 @@ public class SteepestDescentDeterministicHeuristic implements IHeuristics {
     @Override
     public Solution run() {
         this.solution.updateDistanceAndDuration(this.spots);
-        List<Solution> firstNeighborhoodSolutions = this.firstNeighborhood();
-        return null;
+        Solution bestSolution = this.solution;
+
+        List<Solution> firstNeighbourhoodSolutions = this.firstNeighbourhood();
+        for (Solution solution : firstNeighbourhoodSolutions) {
+            if (solution.evaluate() < bestSolution.evaluate()) {
+                bestSolution = solution;
+            }
+        }
+
+        List<Solution> secondNeighborhoodSolutions = this.secondNeighbourhood();
+        for (Solution solution : secondNeighborhoodSolutions) {
+            if (solution.evaluate() < bestSolution.evaluate()) {
+                bestSolution = solution;
+            }
+        }
+
+        List<Solution> thirdNeighborhoodSolutions = this.thirdNeighbourhood();
+        for (Solution solution : thirdNeighborhoodSolutions) {
+            if (solution.evaluate() < bestSolution.evaluate()) {
+                bestSolution = solution;
+            }
+        }
+
+        return bestSolution;
     }
 
-    private List<Solution> firstNeighborhood() {
+    /**
+     * Méthode permettant de calculer les différents voisinages
+     *
+     * @return liste des solutions du voisinage
+     */
+    private List<Solution> firstNeighbourhood() {
         List<List<List<String>>> splitDeliveryByTruck = new ArrayList<>();
 
         for (Truck truck : this.solution.getTrucksList()) {
@@ -55,9 +80,7 @@ public class SteepestDescentDeterministicHeuristic implements IHeuristics {
                 }
             }
 
-            Truck newTruck = new Truck();
             if (indices.isEmpty()) {
-                newTruck.setDeliveryPlanning(truck.getDeliveryPlanning());
                 continue;
             }
 
@@ -85,8 +108,6 @@ public class SteepestDescentDeterministicHeuristic implements IHeuristics {
                 }
             }
             splitDeliveryByTruck.add(splitDelivery);
-            System.out.println(truck.getDeliveryPlanning());
-            System.out.println(splitDelivery);
         }
 
         List<Solution> solutions = new ArrayList<>();
@@ -95,7 +116,7 @@ public class SteepestDescentDeterministicHeuristic implements IHeuristics {
             List<Truck> newTrucks = new ArrayList<>();
             for (List<List<String>> split : splitDeliveryByTruck) {
                 Truck truck = new Truck();
-                truck.setDeliveryPlanning(FormatUtil.buildDeliveryList(FormatUtil.swapDelivery(split, 0, i)));
+                truck.setDeliveryPlanning(HeuristicUtil.buildDeliveryList(HeuristicUtil.swapDelivery(split, 0, i)));
                 newTrucks.add(truck);
             }
             Solution solution = new Solution(newTrucks);
@@ -103,6 +124,80 @@ public class SteepestDescentDeterministicHeuristic implements IHeuristics {
             solutions.add(solution);
         }
 
+        return solutions;
+    }
+
+    /**
+     * Deuxième voisinage qui va intervertir le premier point avec le premier qui suit un chargement
+     * @return Liste de solutions
+     */
+    private List<Solution> secondNeighbourhood() {
+        List<List<Integer>> truckIndices = new ArrayList<>();
+        for (Truck truck : this.solution.getTrucksList()) {
+            List<Integer> indices = new ArrayList<>();
+            for (int i = 0; i < truck.getDeliveryPlanning().size(); i++) {
+                if (truck.getDeliveryPlanning().get(i).equals("C")) {
+                    indices.add(i);
+                }
+            }
+            if (!indices.isEmpty()) truckIndices.add(indices);
+        }
+
+        List<Solution> solutions = new ArrayList<>();
+        int nbIteration = truckIndices.stream().mapToInt(List::size).min().getAsInt();
+        for (int i = 0; i < nbIteration; i++) {
+            List<Truck> newTrucks = new ArrayList<>();
+            for (int y = 0; y < truckIndices.size(); y++) {
+                Truck truck = new Truck();
+                truck.setDeliveryPlanning(HeuristicUtil.swapFirstElementDelivery(
+                        this.solution.getTrucksList().get(y)
+                                .getDeliveryPlanning(), 0, truckIndices.get(y).get(i) + 1));
+                newTrucks.add(truck);
+            }
+            Solution solution = new Solution(newTrucks);
+            solution.updateDistanceAndDuration(this.spots);
+            solutions.add(solution);
+        }
+
+        return solutions;
+    }
+
+    /**
+     * Troisème voisinage qui va transformer le voisinage en déplacant le dernier entre chaque chargement en
+     * dernier d'un autre
+     * @return Liste de solutions
+     */
+    private List<Solution> thirdNeighbourhood() {
+        List<List<Integer>> truckIndices = new ArrayList<>();
+        for (Truck truck : this.solution.getTrucksList()) {
+            List<Integer> indices = new ArrayList<>();
+            for (int i = 0; i < truck.getDeliveryPlanning().size(); i++) {
+                if (truck.getDeliveryPlanning().get(i).equals("C")) {
+                    indices.add(i);
+                }
+            }
+            if (!indices.isEmpty()) truckIndices.add(indices);
+        }
+
+        List<Solution> solutions = new ArrayList<>();
+        int nbIteration = truckIndices.stream().mapToInt(List::size).min().getAsInt();
+        for (int i = 0; i < nbIteration; i++) {
+            if (i != nbIteration - 1) {
+                List<Truck> newTrucks = new ArrayList<>();
+                for (int y = 0; y < truckIndices.size(); y++) {
+                    Truck truck = new Truck();
+
+                    truck.setDeliveryPlanning(HeuristicUtil.swapFirstElementDelivery(
+                            this.solution.getTrucksList().get(y).getDeliveryPlanning(),
+                            truckIndices.get(y).get(i) - 1, truckIndices.get(y).get(i + 1) - 1));
+                    newTrucks.add(truck);
+                }
+                Solution solution = new Solution(newTrucks);
+                solution.updateDistanceAndDuration(this.spots);
+                solutions.add(solution);
+            }
+
+        }
         return solutions;
     }
 }
